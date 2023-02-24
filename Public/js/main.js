@@ -16,9 +16,21 @@ var wholeDeck = [
 //Creating a random stack of cards once it starts
 function StartGame() {
     var randomizedDeck = wholeDeck.sort((a, b) => 0.5 - Math.random())
+    return randomizedDeck
 }
+var randomizedDeckTotal = StartGame();
 
-
+//Return 7 random cards from the deck then remove them
+function GetCardsAtStart() {
+    var tempList = []
+    for (let i= 0; i < 7; i++)
+    {
+        tempList.push(randomizedDeckTotal[i])
+    }
+    console.log(tempList)
+    return tempList
+}
+GetCardsAtStart()
 
 
 
