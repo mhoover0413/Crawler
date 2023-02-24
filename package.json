@@ -1,0 +1,26 @@
+{
+  "name": "unomultiplayer",
+  "version": "1.0.0",
+  "description": "A Uno multiplayer game using websockets with eventually different gamemodes.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brand24376/UnoMultiplayer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brand24376/UnoMultiplayer/issues"
+  },
+  "homepage": "https://github.com/Brand24376/UnoMultiplayer#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "moment": "^2.29.4",
+    "node": "^19.7.0",
+    "socket.io": "^4.6.1"
+  }
+}
