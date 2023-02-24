@@ -12,3 +12,9 @@ var wholeDeck = [
     ["Yellow", "1"], ["Yellow", "2"], ["Yellow", "3"], ["Yellow", "4"], ["Yellow", "5"], ["Yellow", "6"], ["Yellow", "7"], ["Yellow", "8"], ["Yellow", "9"], ["Yellow", "Skip"], ["Yellow", "Reverse"], ["Yellow", "+2"], 
     ["Red", "0"], ["Blue", "0"], ["Green", "0"], ["Yellow", "0"], ["Black", "+4"], ["Black", "+4"], ["Black", "+4"], ["Black", "+4"], ["Black", "Wild"], ["Black", "Wild"], ["Black", "Wild"], ["Black", "Wild"]
 ]
+
+//Creating a random stack of cards once it starts
+function StartGame()
+{
+    var randomizedDeck = wholeDeck.sort((a, b) => 0.5 - Math.random())
+}
