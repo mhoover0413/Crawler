@@ -22,10 +22,10 @@ io.on('connection', socket => {
         socket.join(user.room);
 
         // Welcome current user
-        socket.emit('message', formatMessage(botName, 'Welcome to Red Discord!'));
+        //socket.emit('message', formatMessage(botName, 'Welcome to Red Discord!'));
 
         // Broadcast when a user connnects
-        socket.broadcast.to(user.room).emit('message', formatMessage(botName, ` ${user.username} has joined the chat`));
+        //socket.broadcast.to(user.room).emit('message', formatMessage(botName, ` ${user.username} has joined the chat`));
 
         // Send users and room info
         io.to(user.room).emit('roomUsers', {
@@ -34,11 +34,20 @@ io.on('connection', socket => {
         });
     });
 
-    // Listen for chatessage
+    // Listen for chatmessage
     socket.on('chatMessage', (msg) => {
-        const user = getCurrentUser(socket.id);
+        const user = getCurrentUser(socket.id)
+        if (getRoomUsers(user.room).length == 2)
+        {
+            console.log("hehe")
+            io.to(user.room).emit('message', formatMessage(user.username, msg));
+        }
 
-        io.to(user.room).emit('message', formatMessage(user.username, msg));
+        console.log(user)
+
+        console.log(getRoomUsers(user.room))
+        var usersTotal = getRoomUsers(user.room)
+        //usersTotal[1].
     });
 
     // Runs when client disconnects
@@ -46,7 +55,7 @@ io.on('connection', socket => {
         const user = userLeave(socket.id);
 
         if (user) {
-            io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
+            //io.to(user.room).emit('message', formatMessage(botName, `${user.username} has left the chat`));
 
             // Send users and room info
             io.to(user.room).emit('roomUsers', {

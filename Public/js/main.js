@@ -1,17 +1,21 @@
+
 //Main JS File
 
 //The whole deck of cards for a plain UNO game
 var wholeDeck = [
-    ["Red", "1"], ["Red", "2"], ["Red", "3"], ["Red", "4"], ["Red", "5"], ["Red", "6"], ["Red", "7"], ["Red", "8"], ["Red", "9"], ["Red", "Skip"], ["Red", "Reverse"], ["Red", "+2"],
-    ["Red", "1"], ["Red", "2"], ["Red", "3"], ["Red", "4"], ["Red", "5"], ["Red", "6"], ["Red", "7"], ["Red", "8"], ["Red", "9"], ["Red", "Skip"], ["Red", "Reverse"], ["Red", "+2"],
-    ["Blue", "1"], ["Blue", "2"], ["Blue", "3"], ["", "4"], ["Blue", "5"], ["Blue", "6"], ["Blue", "7"], ["Blue", "8"], ["Blue", "9"], ["Blue", "Skip"], ["Blue", "Reverse"], ["Blue", "+2"],
-    ["Blue", "1"], ["Blue", "2"], ["Blue", "3"], ["", "4"], ["Blue", "5"], ["Blue", "6"], ["Blue", "7"], ["Blue", "8"], ["Blue", "9"], ["Blue", "Skip"], ["Blue", "Reverse"], ["Blue", "+2"],
-    ["Green", "1"], ["Green", "2"], ["Green", "3"], ["Green", "4"], ["Green", "5"], ["Green", "6"], ["Green", "7"], ["Green", "8"], ["Green", "9"], ["Green", "Skip"], ["Green", "Reverse"], ["Green", "+2"],
-    ["Green", "1"], ["Green", "2"], ["Green", "3"], ["Green", "4"], ["Green", "5"], ["Green", "6"], ["Green", "7"], ["Green", "8"], ["Green", "9"], ["Green", "Skip"], ["Green", "Reverse"], ["Green", "+2"],
-    ["Yellow", "1"], ["Yellow", "2"], ["Yellow", "3"], ["Yellow", "4"], ["Yellow", "5"], ["Yellow", "6"], ["Yellow", "7"], ["Yellow", "8"], ["Yellow", "9"], ["Yellow", "Skip"], ["Yellow", "Reverse"], ["Yellow", "+2"],
-    ["Yellow", "1"], ["Yellow", "2"], ["Yellow", "3"], ["Yellow", "4"], ["Yellow", "5"], ["Yellow", "6"], ["Yellow", "7"], ["Yellow", "8"], ["Yellow", "9"], ["Yellow", "Skip"], ["Yellow", "Reverse"], ["Yellow", "+2"],
-    ["Red", "0"], ["Blue", "0"], ["Green", "0"], ["Yellow", "0"], ["Black", "+4"], ["Black", "+4"], ["Black", "+4"], ["Black", "+4"], ["Black", "Wild"], ["Black", "Wild"], ["Black", "Wild"], ["Black", "Wild"]
+    "Red1", "Red2", "Red3", "Red4", "Red5", "Red6", "Red7", "Red8", "Red9", "RedSkip", "RedReverse", "Red+2",
+    "Red1", "Red2", "Red3", "Red4", "Red5", "Red6", "Red7", "Red8", "Red9", "RedSkip", "RedReverse", "Red+2",
+    "Blue1", "Blue2", "Blue3", "Blue4", "Blue5", "Blue6", "Blue7", "Blue8", "Blue9", "BlueSkip", "BlueReverse", "Blue+2",
+    "Blue1", "Blue2", "Blue3", "Blue4", "Blue5", "Blue6", "Blue7", "Blue8", "Blue9", "BlueSkip", "BlueReverse", "Blue+2",
+    "Green1", "Green2", "Green3", "Green4", "Green5", "Green6", "Green7", "Green8", "Green9", "GreenSkip", "GreenReverse", "Green+2",
+    "Green1", "Green2", "Green3", "Green4", "Green5", "Green6", "Green7", "Green8", "Green9", "GreenSkip", "GreenReverse", "Green+2",
+    "Yellow1", "Yellow2", "Yellow3", "Yellow4", "Yellow5", "Yellow6", "Yellow7", "Yellow8", "Yellow9", "YellowSkip", "YellowReverse", "Yellow+2",
+    "Yellow1", "Yellow2", "Yellow3", "Yellow4", "Yellow5", "Yellow6", "Yellow7", "Yellow8", "Yellow9", "YellowSkip", "YellowReverse", "Yellow+2",
+    "Red0", "Blue0", "Green0", "Yellow0", "Black+4", "Black+4", "Black+4", "Black+4", "BlackWild", "BlackWild", "BlackWild", "BlackWild"
 ]
+
+var check = false;
+var complete = false;
 
 //Creating a random stack of cards once it starts
 function StartGame() {
@@ -23,24 +27,52 @@ var randomizedDeckTotal = StartGame();
 //Return 7 random cards from the deck then remove them
 function GetCardsAtStart() {
     var tempList = []
-    for (let i= 0; i < 7; i++)
-    {
+    for (let i = 0; i < 7; i++) {
         tempList.push(randomizedDeckTotal[i])
+        var tempArray = randomizedDeckTotal.indexOf(randomizedDeckTotal[i])
+        randomizedDeckTotal.splice(tempArray, 1);
+        console.log(randomizedDeckTotal)
     }
     console.log(tempList)
+    complete = true;
     return tempList
 }
-GetCardsAtStart()
+
+function GetDeck() {
+    var messages = document.getElementsByClassName("text");
+    var length = messages.length;
+    if (messages.length != 0) {
+        var lastElement = messages[length - 1];
+        var text = lastElement.textContent;
+        var textAsString = String(text)
+        var split = textAsString.replace(/\n/g, '')
+        var split2 = split.replace(/\s/g, '')
+        var splittin = split2.split(',');
+        randomizedDeckTotal = splittin;
+        return splittin;
+    }
+    console.log(randomizedDeckTotal);
+    check = true;
+}
 
 
+setInterval(function () {
+    GetDeck()
+}, 900)
 
-
-
-
-const chatForm = document.getElementById('chat-form');
+setInterval(function () {
+    console.log(check)
+    console.log(complete)
+    if (check == true && complete == false) {
+        console.log("CALLLLLLEEDDD")
+        GetCardsAtStart()
+    }
+}, 1000)
+const chatForm = document.getElementById('sendLeDeck');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
@@ -50,11 +82,12 @@ const { username, room } = Qs.parse(location.search, {
 const socket = io();
 
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', { username, room: "hi" });
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
     outputUsers(users);
+    room = "hi"
 });
 
 // Message from server
@@ -67,19 +100,15 @@ socket.on('message', message => {
 });
 
 //  Message submit
-chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+function start() {
 
     // Get message text
-    const msg = e.target.elements.msg.value;
+    const msg = randomizedDeckTotal;
 
     // Emit message to server
     socket.emit('chatMessage', msg);
-
-    // Cleat input
-    e.target.elements.msg.value = '';
-    e.target.elements.msg.focus();
-});
+};
+start()
 
 
 // Output message to DOM
