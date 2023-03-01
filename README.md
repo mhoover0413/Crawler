@@ -1,2 +1,2 @@
-# UnoMultiplayer
-A Uno multiplayer game using websockets with eventually different gamemodes.
+# Crawler
+A dungeon fighter game using html elements with eventually different gamemodes.
