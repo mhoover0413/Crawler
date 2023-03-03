@@ -1,4 +1,8 @@
 var player = document.getElementById("player");
+var weapon1 = document.getElementById("weapon1");
+var weapon2 = document.getElementById("weapon2");
+var weapon1Box = document.getElementById("Slot1");
+var weapon2Box = document.getElementById("Slot2");
 var enemy = document.getElementById("enemy");
 
 var upPressed = false;
@@ -22,6 +26,24 @@ var playerMaxHealth = 50;
 
 var speed = .6;
 
+if (weapon1.name == "Sword")
+{
+    weapon1.style.transform = "scaleX(-1)";
+}
+if (weapon2.name == "Sword")
+{
+    weapon2.style.transform = "scaleX(-1)";
+}
+
+if (weapon1.name == "Bow")
+{
+    weapon1.style.transform = "scaleX(-1)";
+}
+if (weapon2.name == "Bow")
+{
+    weapon2.style.transform = "scaleX(-1)";
+}
+
 // move player based on user input
 function inputs() {
     var playerX = parseFloat(player.style.left.replace("px", ""));
@@ -42,6 +64,11 @@ function inputs() {
 
         player.style.left = playerX + "px";
         player.style.top = playerY + "px";
+
+        weapon1.style.top = playerY + 15 + "px";
+        weapon2.style.top = playerY + 15 + "px";
+        weapon1.style.left = playerX + "px";
+        weapon2.style.left = playerX + "px";
     }
 }
 
@@ -131,6 +158,29 @@ function keyUp(event) {
 setInterval(inputs, 2);
 //End Player Movement Section
 
+//Start Weapon Select Section
+function selectW(e)
+{
+    if (e.keyCode == 49)
+    {
+        //Weapon1 Selected
+        weapon2.style.visibility = "hidden"
+        weapon2Box.style.backgroundColor = "#FFFFFF"
+        weapon1.style.visibility = "visible";
+        weapon1Box.style.backgroundColor = "#68af36"
+    }
+    if (e.keyCode == 50)
+    {
+        //Weapon2 Selected
+        weapon1.style.visibility = "hidden"
+        weapon1Box.style.backgroundColor = "#FFFFFF"
+        weapon2.style.visibility = "visible";
+        weapon2Box.style.backgroundColor = "#68af36"
+    }
+}
+document.body.addEventListener("keydown", selectW);
+//End Weapon Select Section
+
 //Start Collision Section
 function CollideWall() {
     var enemyX = parseInt(enemy.style.left.replace("px", ""));
@@ -204,7 +254,6 @@ function CollideEnemy() {
         if (playerHealth >= 0) {
             playerHealth -= 2;
         }
-        console.log(playerHealth)
         //Decrease Player Health
 
         var bar = document.getElementById('HealthAmount')
