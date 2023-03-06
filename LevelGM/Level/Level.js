@@ -22,6 +22,8 @@ var EnemyActivate = true;
 var playerHealth = 50;
 var playerMaxHealth = 50;
 
+var winStatus = false;
+
 //Begin Player Movement Section
 
 var speed = .6;
@@ -350,8 +352,17 @@ setInterval(MoveEnemy, 100);
 // Begin Player Death HTML
 function playerDeath() {
     if (playerHealth <= 0) {
-        window.location.href = "./DeathScreen.html"
+        window.location.href = "./DeathScreen.html";
     }
 }
-setInterval(playerDeath, 100)
+setInterval(playerDeath, 100);
 // End Player Death HTML
+
+// Begin Player Win HTML
+function playerWin() {
+    if(winStatus === true) {
+        window.location.href = "./WinScreen.html";
+    }
+}
+setInterval(playerWin, 100);
+// End Player Win HTML
