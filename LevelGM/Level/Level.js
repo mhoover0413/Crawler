@@ -48,7 +48,7 @@ if (weapon2.name == "Bow")
 function inputs() {
     var playerX = parseFloat(player.style.left.replace("px", ""));
     var playerY = parseFloat(player.style.top.replace("px", ""));
-    if (playerHealth >= 0) {
+    if (playerHealth > 0) {
         if (upPressed == true && allowUp == true) {
             playerY -= speed;
         }
@@ -251,7 +251,7 @@ function CollideEnemy() {
     //Collide with player
     if (Math.abs(playerX - enemyX) < 50 && Math.abs(playerY - enemyY) < 80) {
         EnemyActivate = false;
-        if (playerHealth >= 0) {
+        if (playerHealth > 0) {
             playerHealth -= 2;
         }
         //Decrease Player Health
@@ -346,3 +346,12 @@ function MoveEnemy() {
 }
 setInterval(MoveEnemy, 100);
 //End Enemy Movement Section
+
+// Begin Player Death HTML
+function playerDeath() {
+    if (playerHealth <= 0) {
+        window.location.href = "./DeathScreen.html"
+    }
+}
+setInterval(playerDeath, 100)
+// End Player Death HTML
