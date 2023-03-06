@@ -6,6 +6,6 @@ function retryLevel() {
 
 // Begin Give Up Button
 function giveUp() {
-    window.location.href = "../../MainMenu.html"
+    window.location.href = "../../MainMenu.html";
 }
 // End Give Up Button
