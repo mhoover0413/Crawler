@@ -4,6 +4,8 @@ var weapon2 = document.getElementById("weapon2");
 var weapon1Box = document.getElementById("Slot1");
 var weapon2Box = document.getElementById("Slot2");
 var enemy = document.getElementById("enemy");
+var arrow = document.getElementById("invisMoveTOMouse");
+var door = document.getElementById("Door");
 
 var upPressed = false;
 var downPressed = false;
@@ -15,12 +17,26 @@ var allowDown = true;
 var allowLeft = true;
 var allowRight = true;
 
+var allEnemiesDead = false;
+
 var Enemyspeed = .02;
+var EnemyHealth = 25;
 
 var EnemyActivate = true;
 
 var playerHealth = 50;
 var playerMaxHealth = 50;
+
+var winStatus = false;
+var mouseX;
+var mouseY;
+
+document.addEventListener("mousemove", onmousemove);
+
+var onmousemove = function(e){
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+}
 
 //Begin Player Movement Section
 
@@ -48,7 +64,7 @@ if (weapon2.name == "Bow")
 function inputs() {
     var playerX = parseFloat(player.style.left.replace("px", ""));
     var playerY = parseFloat(player.style.top.replace("px", ""));
-    if (playerHealth >= 0) {
+    if (playerHealth > 0) {
         if (upPressed == true && allowUp == true) {
             playerY -= speed;
         }
@@ -181,6 +197,13 @@ function selectW(e)
 document.body.addEventListener("keydown", selectW);
 //End Weapon Select Section
 
+//Start Game Win
+function GameWin()
+{
+    document.getElementById("Door").style.visibility = "visible";
+}
+//End Game Win
+
 //Start Collision Section
 function CollideWall() {
     var enemyX = parseInt(enemy.style.left.replace("px", ""));
@@ -251,7 +274,7 @@ function CollideEnemy() {
     //Collide with player
     if (Math.abs(playerX - enemyX) < 50 && Math.abs(playerY - enemyY) < 80) {
         EnemyActivate = false;
-        if (playerHealth >= 0) {
+        if (playerHealth > 0) {
             playerHealth -= 2;
         }
         //Decrease Player Health
@@ -266,9 +289,194 @@ function CollideEnemy() {
         EnemyActivate = true;
     }
 }
+
+function CollideArrow() {
+    var enemyX = parseInt(enemy.style.left.replace("px", ""));
+    var enemyY = parseInt(enemy.style.top.replace("px", ""));
+    var arrowX = parseInt(arrow.style.left.replace("px", ""));
+    var arrowY = parseInt(arrow.style.top.replace("px", ""));
+
+    var wallTop = document.getElementById("WallTop")
+    var wallBttm = document.getElementById("WallBottom")
+    var wallLeft = document.getElementById("WallLeft")
+    var wallRight = document.getElementById("WallRight")
+
+    var wallTopY = parseInt(wallTop.style.top.replace("px", ""));
+    var wallBottomY = parseInt(wallBttm.style.top.replace("px", ""));
+    var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
+    var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
+
+    if (Math.abs(arrowX - enemyX) < 50 && Math.abs(arrowY - enemyY) < 50 && EnemyHealth > 0) {
+        arrow.style.visibility = "hidden"
+        EnemyHealth -= 5
+        allEnemiesDead = true;
+        GameWin()
+        console.log(EnemyHealth)
+    }
+    //Hit
+    if (Math.abs(arrowY - wallTopY) < 50) {
+        console.log("Hit1")
+        arrow.style.visibility = "hidden"
+    }
+
+    if (Math.abs(arrowY - wallBottomY) < 50) {
+        console.log("Hit2")
+        arrow.style.visibility = "hidden"
+    }
+
+    if (Math.abs(arrowX - wallLeftX) < 50) {
+        console.log("Hit3")
+        arrow.style.visibility = "hidden"
+    }
+
+    if (Math.abs(arrowX - wallRightX) < 50) {
+        console.log("Hit4")
+        arrow.style.visibility = "hidden"
+    }
+}
+function CollideDoor()
+{
+    var playerX = parseFloat(player.style.left.replace("px", ""));
+    var playerY = parseFloat(player.style.top.replace("px", ""));
+
+    var doorX = parseFloat(door.style.left.replace("px", ""));
+    var doorY = parseFloat(door.style.top.replace("px", ""));
+
+    if (Math.abs(playerX - doorX) < 50 && Math.abs(playerY - doorY) < 50 && EnemyHealth <= 0) {
+        console.log("hee")
+        winStatus = true;
+    }
+}
 setInterval(CollideWall, 4)
 setInterval(CollideEnemy, 600)
+setInterval(CollideArrow, 600)
+setInterval(CollideDoor, 10)
 //End Collision Section
+
+//Start Arrow Movement Section
+var arrowX;
+var arrowY;
+
+var distanceXarrow;
+var distanceYarrow;
+
+var xLocked;
+var yLocked;
+
+var moveAmountX;
+var moveAmountY;
+
+var directionX;
+var directionY;
+
+document.onmousedown = function()
+{
+    if (document.getElementById("weapon1").name == "Bow" && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden")
+    {
+        console.log('ehheshe')
+        xLocked = mouseX;
+        yLocked = mouseY;
+
+        arrowX = parseInt(arrow.style.left.replace("px", ""));
+        arrowY = parseInt(arrow.style.top.replace("px", ""));
+
+        var weaponX = parseInt(document.getElementById("weapon1").style.left.replace("px", ""));
+        var weaponY = parseInt(document.getElementById("weapon1").style.top.replace("px", ""));
+
+        arrowX = weaponX;
+        arrowY = weaponY;
+
+        arrow.style.left = arrowX + "px";
+        arrow.style.top = arrowY + "px";  
+
+        distanceXarrow = Math.abs(arrowX - xLocked)
+        distanceYarrow = Math.abs(arrowY - yLocked)
+
+        moveAmountX = ((distanceXarrow + 350) * .015) + .1;
+        moveAmountY = ((distanceYarrow - 50) * .05) + .1;
+
+        if (xLocked > arrowX) {
+            directionX = "Greater"
+        }
+        if (xLocked < arrowX) {
+            directionX = "Lesser"
+        }
+        if (yLocked > arrowY) {
+            directionY = "Greater"
+        }
+        if (yLocked < arrowY) {
+            directionY = "lesser" 
+        }
+
+        document.getElementById("invisMoveTOMouse").style.visibility = "visible"
+    }
+    if (document.getElementById("weapon2").name == "Bow" && document.getElementById("weapon2").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden")
+    {
+        console.log("jdsldlskl")
+        xLocked = mouseX;
+        yLocked = mouseY;
+
+        xLocked = mouseX;
+        yLocked = mouseY;
+
+        arrowX = parseInt(arrow.style.left.replace("px", ""));
+        arrowY = parseInt(arrow.style.top.replace("px", ""));
+
+        var weaponX = parseInt(document.getElementById("weapon2").style.left.replace("px", ""));
+        var weaponY = parseInt(document.getElementById("weapon2").style.top.replace("px", ""));
+
+        arrowX = weaponX;
+        arrowY = weaponY;
+
+        arrow.style.left = arrowX + "px";
+        arrow.style.top = arrowY + "px"; 
+
+        distanceXarrow = Math.abs(arrowX - xLocked)
+        distanceYarrow = Math.abs(arrowY - yLocked)
+
+        moveAmountX = (distanceXarrow + 350) * .015;
+        moveAmountY = (distanceYarrow - 50) * .05;
+
+        if (xLocked > arrowX) {
+            directionX = "Greater"
+        }
+        if (xLocked < arrowX) {
+            directionX = "Lesser"
+        }
+        if (yLocked > arrowY) {
+            directionY = "Greater"
+        }
+        if (yLocked < arrowY) {
+            directionY = "Lesser"
+        }
+
+        document.getElementById("invisMoveTOMouse").style.visibility = "visible"
+    }
+}
+
+function ArrowGoTo()
+{
+    arrowX = parseInt(arrow.style.left.replace("px", ""));
+    arrowY = parseInt(arrow.style.top.replace("px", ""));
+
+    if (directionX == 'Greater') {
+        arrowX = arrowX + moveAmountX
+    }
+    if (directionX == 'Lesser') {
+        arrowX = arrowX - moveAmountX
+    }
+    if (directionY == 'Greater') {
+        arrowY = arrowY + moveAmountY
+    }
+    if (directionY == 'Lesser') {
+        arrowY = arrowY - moveAmountY
+    }
+
+    arrow.style.left = arrowX + "px";
+    arrow.style.top = arrowY + "px";
+}
+setInterval(ArrowGoTo, 90)
+//End Arrow Movement Section
 
 //Begin Enemy Movement Section
 var enemyX;
@@ -346,3 +554,21 @@ function MoveEnemy() {
 }
 setInterval(MoveEnemy, 100);
 //End Enemy Movement Section
+
+// Begin Player Death HTML
+function playerDeath() {
+    if (playerHealth <= 0) {
+        window.location.href = "./DeathScreen.html";
+    }
+}
+setInterval(playerDeath, 100);
+// End Player Death HTML
+
+// Begin Player Win HTML
+function playerWin() {
+    if(winStatus === true) {
+        window.location.href = "./WinScreen.html";
+    }
+}
+setInterval(playerWin, 100);
+// End Player Win HTML
