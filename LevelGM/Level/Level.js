@@ -6,11 +6,14 @@ var weapon2Box = document.getElementById("Slot2");
 var enemy = document.getElementById("enemy");
 var arrow = document.getElementById("invisMoveTOMouse");
 var door = document.getElementById("Door");
+var swordHitBox = document.getElementById("swordHitBox")
 
 var upPressed = false;
 var downPressed = false;
 var leftPressed = false;
 var rightPressed = false;
+
+var swordActivated = false;
 
 var allowUp = true;
 var allowDown = true;
@@ -53,11 +56,11 @@ if (weapon2.name == "Sword")
 
 if (weapon1.name == "Bow")
 {
-    weapon1.style.transform = "scaleX(-1)";
+    weapon1.style.transform = "scaleX(1)";
 }
 if (weapon2.name == "Bow")
 {
-    weapon2.style.transform = "scaleX(-1)";
+    weapon2.style.transform = "scaleX(1)";
 }
 
 // move player based on user input
@@ -74,7 +77,7 @@ function inputs() {
         if (leftPressed == true && allowLeft == true) {
             playerX -= speed;
         }
-        if (rightPressed == true && allowRight == true) {
+        if (rightPressed == true &1& allowRight == true) {
             playerX += speed;
         }
 
@@ -83,8 +86,10 @@ function inputs() {
 
         weapon1.style.top = playerY + 15 + "px";
         weapon2.style.top = playerY + 15 + "px";
-        weapon1.style.left = playerX + "px";
-        weapon2.style.left = playerX + "px";
+        swordHitBox.style.top = playerY + 15 + "px";
+        weapon1.style.left = playerX - 20 + "px";
+        weapon2.style.left = playerX - 10 + "px";
+        swordHitBox.style.left = playerX - 20 + "px";
     }
 }
 
@@ -197,13 +202,6 @@ function selectW(e)
 document.body.addEventListener("keydown", selectW);
 //End Weapon Select Section
 
-//Start Game Win
-function GameWin()
-{
-    document.getElementById("Door").style.visibility = "visible";
-}
-//End Game Win
-
 //Start Collision Section
 function CollideWall() {
     var enemyX = parseInt(enemy.style.left.replace("px", ""));
@@ -306,12 +304,14 @@ function CollideArrow() {
     var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
     var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
 
+    
     if (Math.abs(arrowX - enemyX) < 50 && Math.abs(arrowY - enemyY) < 50 && EnemyHealth > 0) {
         arrow.style.visibility = "hidden"
-        EnemyHealth -= 5
-        allEnemiesDead = true;
-        GameWin()
-        console.log(EnemyHealth)
+        EnemyHealth -= 5;
+        if (EnemyHealth <= 0)
+        {
+            enemy.style.visibility = "hidden"
+        }
     }
     //Hit
     if (Math.abs(arrowY - wallTopY) < 50) {
@@ -334,6 +334,21 @@ function CollideArrow() {
         arrow.style.visibility = "hidden"
     }
 }
+function CollideSword()
+{
+    var swordHitBoxX = parseInt(swordHitBox.style.left.replace("px", ""));
+    var swordHitBoxY = parseInt(swordHitBox.style.top.replace("px", ""));
+    var enemyX = parseInt(enemy.style.left.replace("px", ""));
+    var enemyY = parseInt(enemy.style.top.replace("px", ""));
+
+    if (Math.abs(swordHitBoxX - enemyX) < 90 && Math.abs(swordHitBoxY - enemyY) < 90 && swordActivated == true) {
+        EnemyHealth -= 5;
+        if (EnemyHealth <= 0)
+        {
+            enemy.style.visibility = "hidden"
+        }
+    }
+}
 function CollideDoor()
 {
     var playerX = parseFloat(player.style.left.replace("px", ""));
@@ -342,14 +357,17 @@ function CollideDoor()
     var doorX = parseFloat(door.style.left.replace("px", ""));
     var doorY = parseFloat(door.style.top.replace("px", ""));
 
-    if (Math.abs(playerX - doorX) < 50 && Math.abs(playerY - doorY) < 50 && EnemyHealth <= 0) {
+    if (Math.abs(playerX - doorX) < 90 && Math.abs(playerY - doorY) < 90 && EnemyHealth <= 0) {
         console.log("hee")
         winStatus = true;
+        allEnemiesDead = true;
+        GameWin();
     }
 }
 setInterval(CollideWall, 4)
 setInterval(CollideEnemy, 600)
 setInterval(CollideArrow, 600)
+setInterval(CollideSword, 900)
 setInterval(CollideDoor, 10)
 //End Collision Section
 
@@ -395,18 +413,29 @@ document.onmousedown = function()
         moveAmountX = ((distanceXarrow + 350) * .015) + .1;
         moveAmountY = ((distanceYarrow - 50) * .05) + .1;
 
+        //arrow.style.transform = `scaleX(-1)`;
         if (xLocked > arrowX) {
             directionX = "Greater"
+            arrow.style.transform = "scaleX(1)";
         }
         if (xLocked < arrowX) {
             directionX = "Lesser"
+            arrow.style.transform = "scaleX(-1)";
         }
         if (yLocked > arrowY) {
             directionY = "Greater"
+            //arrow.style.transform = "scaleY(1)";
         }
         if (yLocked < arrowY) {
-            directionY = "lesser" 
+            directionY = "Lesser"
+            //arrow.style.transform = "scaleY(-1)";
         }
+
+        var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
+
+        var angleDeg = angleRad * 180/Math.PI
+
+        //arrow.style.transform = `rotate(${angleDeg}deg)`;
 
         document.getElementById("invisMoveTOMouse").style.visibility = "visible"
     }
@@ -436,22 +465,49 @@ document.onmousedown = function()
 
         moveAmountX = (distanceXarrow + 350) * .015;
         moveAmountY = (distanceYarrow - 50) * .05;
-
+        arrow.style.transform = `rotate(-180deg)`;
         if (xLocked > arrowX) {
             directionX = "Greater"
+            arrow.style.transform = `scaleX(1)`;
         }
         if (xLocked < arrowX) {
             directionX = "Lesser"
+            arrow.style.transform = `scaleX(-1)`;
         }
         if (yLocked > arrowY) {
             directionY = "Greater"
+            arrow.style.transform += "scaleY(1)";
         }
         if (yLocked < arrowY) {
             directionY = "Lesser"
+            arrow.style.transform += "scaleY(-1)";
         }
+
+        var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
+
+        var angleDeg = angleRad * 180/Math.PI
+
+        arrow.style.transform += `rotate(${angleDeg}deg)`;
 
         document.getElementById("invisMoveTOMouse").style.visibility = "visible"
     }
+    if (document.getElementById("weapon1").name == "Sword" && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false)
+    {
+        change()
+    }
+    if (document.getElementById("weapon2").name == "Sword" && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false)
+    {
+        change()
+    }
+}
+
+function change()
+{
+    swordActivated = true;
+    setTimeout(function()
+    {
+        swordActivated = false;
+    }, 400)
 }
 
 function ArrowGoTo()

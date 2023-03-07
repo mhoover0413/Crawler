@@ -9,11 +9,12 @@
 <body style="overflow: hidden;">
     <marquee>Under Construction</marquee>
     <div name="Player">
-        <img id="player" style="width: 100px; height: 100px; left: 750px; top: 500px; position: absolute;" src="./Art/Placeholders/PHCharacter.png"></img>
-        <img id="weapon1" style="width: 40px; height: 55px; left: 750px; top: 500px; position: absolute; visibility: hidden;" name="Sword" src="./Art/Placeholders/PHSword.png"></img>
-        <img id="weapon2" style="width: 40px; height: 55px; left: 750px; top: 500px; position: absolute; visibility: hidden;" name="Bow" src="./Art/Placeholders/PHBow.png"></img>
+        <img id="player" style="width: 100px; height: 100px; left: 750px; top: 500px; position: absolute;" src="./Art/Senator_Catstrong.png"></img>
+        <img id="weapon1" style="width: 60px; height: 75px; left: 740px; top: 500px; position: absolute; visibility: hidden;" name="Sword" src="./Art/Base_Katana.png"></img>
+        <img id="swordHitBox" style="width: 50px; height: 50px; position: absolute; visibility: hidden;"></img>
+        <img id="weapon2" style="width: 60px; height: 75px; left: 740px; top: 500px; position: absolute; visibility: hidden;" name="Bow" src="./Art/Base_Bow.png"></img>
     </div>
-    <img id="enemy" style="width: 100px; height: 100px; left: 850px; top: 100px; position: absolute;" src="./Art/Placeholders/PHEnemyRunner.png"></img>
+    <img id="enemy" style="width: 100px; height: 100px; left: 850px; top: 100px; position: absolute;" src="./Art/Blue_Lobster_Enemy_Horizontal.png"></img>
 
     <div id="HealthEmptyBar" style="left: 20px; width: 200px; top: 15px;height: 30px; position: absolute; border: thick double black;"></div>
     <div id="HealthAmount" style="left: 25px; top: 20px; width: 200px; height: 30px; position: absolute; background-color: green;"></div>
@@ -21,17 +22,31 @@
     <div id="Slot1" style="left: 1600px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black;"></div>
     <div id="Slot2" style="left: 1750px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black;"></div>
 
-    <img id="Door" style="left: 700px; width: 200px; top: 95px; height: 30px; position: absolute; z-index: 1;" src="./Art/Placeholders/PHDoor.png"></img>
+    <img id="Door" style="left: 750px; width: 120px; top: 50px; height: 90px; position: absolute; z-index: 1;" src="./Art/Door.png"></img>
 
-    <img id="invisMoveTOMouse" src="./Art/Flint_Tipped_Arrow.png" style="left: 1000px; width: 80px; top: 1000px; height: 120px; position: absolute; visibility: hidden;"></img>
+    <img id="invisMoveTOMouse" src="./Art/AngleTesting.png" style="left: 1000px; width: 80px; top: 1000px; height: 120px; position: absolute; visibility: hidden;"></img>
 
-    <img id="Weapon1" style="left: 1610px; width: 120px; top: 805px; height: 120px; position: absolute;" src="./Art/Placeholders/PHSword.png"></img>
-    <img id="Weapon2" style="left: 1770px; width: 120px; top: 810px; height: 120px; position: absolute;" src="./Art/Placeholders/PHBow.png"></img>
+    <img id="Weapon1" style="left: 1610px; width: 120px; top: 805px; height: 120px; position: absolute;" src="./Art/Base_Katana.png"></img>
+    <img id="Weapon2" style="left: 1770px; width: 120px; top: 810px; height: 120px; position: absolute;" src="./Art/Base_Bow.png"></img>
 
-    <img id="WallTop" style="width: 700px; height: 100px; left: 600px; top: 50px; position: absolute" src="./Art/Placeholders/WTop.png"></img>
-    <img id="WallBottom" style="width: 700px; height: 100px; left: 600px; top: 650px; position: absolute" src="./Art/Placeholders/WBottom.png"></img>
-    <img id="WallLeft" style="width: 100px; height: 600px; left: 600px; top: 97px; position: absolute" src="./Art/Placeholders/WLeft.png"></img>
-    <img id="WallRight" style="width: 100px; height: 600px; left: 1200px; top: 97px; position: absolute" src="./Art/Placeholders/WRight.png"></img>
+    <img id="WallTop" style="width: 140px; height: 100px; left: 600px; top: 50px; position: absolute" src="./Art/WallTop.png"></img> 
+    <img id="WallTop" style="width: 140px; height: 100px; left: 740px; top: 50px; position: absolute" src="./Art/WallTop.png"></img>
+    <img id="WallTop" style="width: 140px; height: 100px; left: 880px; top: 50px; position: absolute" src="./Art/WallTop.png"></img> 
+    <img id="WallTop" style="width: 140px; height: 100px; left: 1020px; top: 50px; position: absolute" src="./Art/WallTop.png"></img>
+    <img id="WallTop" style="width: 140px; height: 100px; left: 1160px; top: 50px; position: absolute" src="./Art/WallTop.png"></img>
+    <img id="WallBottom" style="width: 140px; height: 100px; left: 600px; top: 650px; position: absolute" src="./Art/WallBttm.png"></img>
+    <img id="WallBottom" style="width: 140px; height: 100px; left: 740px; top: 650px; position: absolute" src="./Art/WallBttm.png"></img>
+    <img id="WallBottom" style="width: 140px; height: 100px; left: 880px; top: 650px; position: absolute" src="./Art/WallBttm.png"></img>
+    <img id="WallBottom" style="width: 140px; height: 100px; left: 1020px; top: 650px; position: absolute" src="./Art/WallBttm.png"></img>
+    <img id="WallBottom" style="width: 140px; height: 100px; left: 1160px; top: 650px; position: absolute" src="./Art/WallBttm.png"></img>
+    <img id="WallLeft" style="width: 100px; height: 120px; left: 600px; top: 130px; position: absolute" src="./Art/WallLeft.png"></img>
+    <img id="WallLeft" style="width: 100px; height: 140px; left: 600px; top: 250px; position: absolute" src="./Art/WallLeft.png"></img>
+    <img id="WallLeft" style="width: 100px; height: 140px; left: 600px; top: 390px; position: absolute" src="./Art/WallLeft.png"></img>
+    <img id="WallLeft" style="width: 100px; height: 140px; left: 600px; top: 530px; position: absolute" src="./Art/WallLeft.png"></img>
+    <img id="WallRight" style="width: 100px; height: 120px; left: 1200px; top: 130px; position: absolute" src="./Art/WallRight.png"></img>
+    <img id="WallRight" style="width: 100px; height: 140px; left: 1200px; top: 250px; position: absolute" src="./Art/WallRight.png"></img>
+    <img id="WallRight" style="width: 100px; height: 140px; left: 1200px; top: 390px; position: absolute" src="./Art/WallRight.png"></img>
+    <img id="WallRight" style="width: 100px; height: 140px; left: 1200px; top: 530px; position: absolute" src="./Art/WallRight.png"></img>
 
     <script src="Level.js"></script>
 </body>
