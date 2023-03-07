@@ -25,6 +25,8 @@ var allEnemiesDead = false;
 var Enemyspeed = .02;
 var EnemyHealth = 25;
 
+var enemyAlive = true;
+
 var EnemyActivate = true;
 
 var playerHealth = 50;
@@ -220,7 +222,7 @@ function CollideWall() {
     var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
 
     //Disable collision over enemy
-    if (Math.abs(playerX - enemyX) < 50 && Math.abs(playerY - enemyY) < 80) {
+    if (Math.abs(playerX - enemyX) < 50 && Math.abs(playerY - enemyY) < 80 && enemyAlive == true) {
         if (playerX > enemyX) {
             allowLeft = false;
         }
@@ -272,7 +274,7 @@ function CollideEnemy() {
     //Collide with player
     if (Math.abs(playerX - enemyX) < 50 && Math.abs(playerY - enemyY) < 80) {
         EnemyActivate = false;
-        if (playerHealth > 0) {
+        if (playerHealth > 0 && enemyAlive == true) {
             playerHealth -= 2;
         }
         //Decrease Player Health
@@ -311,6 +313,8 @@ function CollideArrow() {
         if (EnemyHealth <= 0)
         {
             enemy.style.visibility = "hidden"
+            enemyAlive = false;
+
         }
     }
     //Hit
@@ -346,6 +350,7 @@ function CollideSword()
         if (EnemyHealth <= 0)
         {
             enemy.style.visibility = "hidden"
+            enemyAlive = false;
         }
     }
 }

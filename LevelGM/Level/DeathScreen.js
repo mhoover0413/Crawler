@@ -1,6 +1,6 @@
 // Begin Retry Level Button
 function retryLevel() {
-    window.location.href = "./level.html";
+    window.location.href = "./Level.html";
 }
 // End Retry Level Button
 
