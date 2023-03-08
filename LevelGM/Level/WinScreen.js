@@ -1,13 +1,15 @@
 // Begin Next Level Button
 function nextLevel() {
-    // Change the href and delete this comment when the next level is made
-    window.location.href = "https://brand24376.github.io/";
+    var currentLevel = window.localStorage.getItem("levelSelected");
+    var nextLevelInt = parseInt(currentLevel) + 1;
+    window.localStorage.setItem("levelSelected", nextLevelInt);
+
+    window.location.href = "./Level.html";
 }
 // End Next Level Button
 
 // Begin Level Selection Button
 function levelSelect() {
-    // Change the href and delete this comment when the next level is made
     window.location.href = "../LevelSelection.html";
 }
 // End Level Selection Button

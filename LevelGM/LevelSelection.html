@@ -10,13 +10,16 @@
 
 <body>
     <marquee>Under Construction (Needs CSS + Other Levels)</marquee>
+    <button id="Reset" onclick="Restart()">Reset</button>
     <center>
         <h2> Level Selection </h2>
         <h4><i> Select any level available! </i></h4>
         <br>
         <br>
-        <button onclick="window.location.href = './Level/Level.html'"> Level 1 </button>
+        <button id="Bttn1" style="visibility: hidden;"onclick="levelSelected(1)"> Level 1 </button>
+        <button id="Bttn2" style="visibility: hidden;"onclick="levelSelected(2)"> Level 2 </button>
     </center>
+    <script src="LS.js"></script>
 </body>
 
 </html>
