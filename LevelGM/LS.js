@@ -1,7 +1,7 @@
 var levelHighScore = window.localStorage.getItem("levelHS")
 console.log(window.localStorage.getItem("levelHS"))
 
-if (window.localStorage.getItem("levelHS") == 0)
+if (window.localStorage.getItem("levelHS") == 0 || window.localStorage.getItem("levelHS") == null)
 {
     Restart()
 }
