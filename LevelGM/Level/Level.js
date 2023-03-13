@@ -273,7 +273,6 @@ if (gameBroke == false) {
         var playerX = parseInt(player.style.left.replace("px", ""));
         var playerY = parseInt(player.style.top.replace("px", ""));
 
-        console.log(enemy.length)
         for (let i = 0; i < enemy.length; i++) {
             var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
             var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
@@ -325,9 +324,9 @@ if (gameBroke == false) {
             }
 
             if (wallTopSpecial != "") {
-                for (let i = 0; i < wallTopSpecial.length; i++) {
-                    wallTopSpecialX = parseInt(wallTopSpecial[i].style.left.replace("px", ""));
-                    wallTopSpecialY = parseInt(wallTopSpecial[i].style.top.replace("px", ""));
+                for (let o = 0; o < wallTopSpecial.length; o++) {
+                    wallTopSpecialX = parseInt(wallTopSpecial[o].style.left.replace("px", ""));
+                    wallTopSpecialY = parseInt(wallTopSpecial[o].style.top.replace("px", ""));
                     if (Math.abs(enemyX - wallTopSpecialX) < 90 && Math.abs(enemyY - wallTopSpecialY) < 50) {
                         enemyY += tempEnemySpeed;
                         enemy[i].style.top = enemyY + "px";
@@ -336,9 +335,9 @@ if (gameBroke == false) {
                 }
             }
             if (wallBttmSpecial != "") {
-                for (let i = 0; i < wallBttmSpecial.length; i++) {
-                    wallBttmSpecialX = parseInt(wallBttmSpecial[i].style.left.replace("px", ""));
-                    wallBttmSpecialY = parseInt(wallBttmSpecial[i].style.top.replace("px", ""));
+                for (let o = 0; o < wallBttmSpecial.length; o++) {
+                    wallBttmSpecialX = parseInt(wallBttmSpecial[o].style.left.replace("px", ""));
+                    wallBttmSpecialY = parseInt(wallBttmSpecial[o].style.top.replace("px", ""));
                     if (Math.abs(enemyX - wallBttmSpecialX) < 90 && Math.abs(enemyY - wallBttmSpecialY) < 50) {
                         enemyY -= tempEnemySpeed;
                         enemy[i].style.top = enemyY + "px";
@@ -347,19 +346,20 @@ if (gameBroke == false) {
                 }
             }
             if (wallLeftSpecial != "") {
-                for (let i = 0; i < wallLeftSpecial.length; i++) {
-                    wallLeftSpecialX = parseInt(wallLeftSpecial[i].style.left.replace("px", ""));
-                    wallLeftSpecialY = parseInt(wallLeftSpecial[i].style.top.replace("px", ""));
+                for (let o = 0; o < wallLeftSpecial.length; o++) {
+                    wallLeftSpecialX = parseInt(wallLeftSpecial[o].style.left.replace("px", ""));
+                    wallLeftSpecialY = parseInt(wallLeftSpecial[o].style.top.replace("px", ""));
                     if (Math.abs(enemyX - wallLeftSpecialX) < 50 && Math.abs(enemyY - wallLeftSpecialY) < 80) {
+                        console.log(tempEnemySpeed)
                         enemyX += tempEnemySpeed;
                         enemy[i].style.left = enemyX + "px";
                     }
                 }
             }
             if (wallRightSpecial != "") {
-                for (let i = 0; i < wallRightSpecial.length; i++) {
-                    wallRightSpecialX = parseInt(wallRightSpecial[i].style.left.replace("px", ""));
-                    wallRightSpecialY = parseInt(wallRightSpecial[i].style.top.replace("px", ""));
+                for (let o = 0; o < wallRightSpecial.length; o++) {
+                    wallRightSpecialX = parseInt(wallRightSpecial[o].style.left.replace("px", ""));
+                    wallRightSpecialY = parseInt(wallRightSpecial[o].style.top.replace("px", ""));
                     if (Math.abs(enemyX - wallRightSpecialX) < 50 && Math.abs(enemyY - wallRightSpecialY) < 80) {
                         enemyX -= tempEnemySpeed;
                         enemy[i].style.left = enemyX + "px";
@@ -481,7 +481,6 @@ if (gameBroke == false) {
                 if (tempEnemyHealth <= 0) {
                     enemy[i].style.visibility = "hidden"
                     enemy[i].remove()
-                    enemyAlive = false;
                 }
             }
         }
