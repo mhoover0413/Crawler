@@ -9,6 +9,10 @@ var door = document.getElementById("Door" + window.localStorage.getItem("levelSe
 var swordHitBox = document.getElementById("swordHitBox")
 
 //This gameBroke is for if you go past the amount of created levels
+
+//Pre generated dungeons with random enemies in them, and exits that go to new dungeons
+
+//Create a list of maps with their id and starting position, then random pick from it and spawn the player in it, add random enemies in the map after it.
 var gameBroke = false;
 
 var upPressed = false;
@@ -776,17 +780,17 @@ if (gameBroke == false) {
     var distanceX;
     var distanceY;
 
-    
+
     function MoveEnemy() {
         for (let i = 0; i < enemy.length; i++) {
             var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
             var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
             playerX = parseInt(player.style.left.replace("px", ""));
             playerY = parseInt(player.style.top.replace("px", ""));
-            
+
             distanceX = Math.abs(playerX - enemyX)
             distanceY = Math.abs(playerY - enemyY)
-            
+
             var enemyId = enemy[i].id.split(" ");
             var tempEnemyHealth = parseInt(enemyId[0])
             var tempEnemySpeed = parseFloat(enemyId[1])
@@ -850,7 +854,7 @@ if (gameBroke == false) {
             enemy[i].style.left = enemyX + "px";
             enemy[i].style.top = enemyY + "px";
 
-            enemy[i].id = enemyId[0] + " " + enemyId[1]; 
+            enemy[i].id = enemyId[0] + " " + enemyId[1];
         }
     }
     setInterval(MoveEnemy, 100);
