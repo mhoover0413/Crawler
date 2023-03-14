@@ -593,7 +593,7 @@ if (gameBroke == false) {
             var tempEnemySpeed = parseInt(enemyId[1])
 
             if (Math.abs(swordHitBoxX - enemyX) < 90 && Math.abs(swordHitBoxY - enemyY) < 90 && swordActivated == true) {
-                enemy[i].id = tempEnemyHealth - 5 + tempEnemySpeed;
+                enemy[i].id = (tempEnemyHealth - 5) + " " + tempEnemySpeed;
                 if (tempEnemyHealth <= 0) {
                     enemy[i].style.visibility = "hidden"
                     enemy[i].remove()
