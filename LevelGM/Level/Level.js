@@ -582,15 +582,19 @@ if (gameBroke == false) {
 
     }
     function CollideSword() {
-        var swordHitBoxX = parseInt(swordHitBox.style.left.replace("px", ""));
-        var swordHitBoxY = parseInt(swordHitBox.style.top.replace("px", ""));
+        var swordHitBoxX = parseFloat(swordHitBox.style.left.replace("px", ""));
+        var swordHitBoxY = parseFloat(swordHitBox.style.top.replace("px", ""));
         for (let i = 0; i < enemy.length; i++) {
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
+
+            var enemyId = enemy[i].id.split(" ");
+            var tempEnemyHealth = parseInt(enemyId[0])
+            var tempEnemySpeed = parseInt(enemyId[1])
 
             if (Math.abs(swordHitBoxX - enemyX) < 90 && Math.abs(swordHitBoxY - enemyY) < 90 && swordActivated == true) {
-                enemy[i].id = parseInt(enemy[i].id) - 5;
-                if (parseInt(enemy[i].id) <= 0) {
+                enemy[i].id = tempEnemyHealth - 5 + tempEnemySpeed;
+                if (tempEnemyHealth <= 0) {
                     enemy[i].style.visibility = "hidden"
                     enemy[i].remove()
                     enemyAlive = false;
