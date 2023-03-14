@@ -110,7 +110,7 @@ if (gameBroke == false) {
             if (leftPressed == true && allowLeft == true) {
                 playerX -= speed;
             }
-            if (rightPressed == true & 1 & allowRight == true) {
+            if (rightPressed == true && allowRight == true) {
                 playerX += speed;
             }
 
@@ -270,12 +270,12 @@ if (gameBroke == false) {
         var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
         var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
 
-        var playerX = parseInt(player.style.left.replace("px", ""));
-        var playerY = parseInt(player.style.top.replace("px", ""));
+        var playerX = parseFloat(player.style.left.replace("px", ""));
+        var playerY = parseFloat(player.style.top.replace("px", ""));
 
         for (let i = 0; i < enemy.length; i++) {
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
 
             var enemyId = enemy[i].id.split(" ");
             var tempEnemyHealth = parseInt(enemyId[0])
@@ -327,7 +327,7 @@ if (gameBroke == false) {
                 for (let o = 0; o < wallTopSpecial.length; o++) {
                     wallTopSpecialX = parseInt(wallTopSpecial[o].style.left.replace("px", ""));
                     wallTopSpecialY = parseInt(wallTopSpecial[o].style.top.replace("px", ""));
-                    if (Math.abs(enemyX - wallTopSpecialX) < 90 && Math.abs(enemyY - wallTopSpecialY) < 50) {
+                    if (Math.abs(enemyX - wallTopSpecialX) < 70 && Math.abs(enemyY - wallTopSpecialY) < 50) {
                         enemyY += tempEnemySpeed;
                         enemy[i].style.top = enemyY + "px";
 
@@ -338,7 +338,7 @@ if (gameBroke == false) {
                 for (let o = 0; o < wallBttmSpecial.length; o++) {
                     wallBttmSpecialX = parseInt(wallBttmSpecial[o].style.left.replace("px", ""));
                     wallBttmSpecialY = parseInt(wallBttmSpecial[o].style.top.replace("px", ""));
-                    if (Math.abs(enemyX - wallBttmSpecialX) < 90 && Math.abs(enemyY - wallBttmSpecialY) < 50) {
+                    if (Math.abs(enemyX - wallBttmSpecialX) < 70 && Math.abs(enemyY - wallBttmSpecialY) < 50) {
                         enemyY -= tempEnemySpeed;
                         enemy[i].style.top = enemyY + "px";
 
@@ -349,8 +349,7 @@ if (gameBroke == false) {
                 for (let o = 0; o < wallLeftSpecial.length; o++) {
                     wallLeftSpecialX = parseInt(wallLeftSpecial[o].style.left.replace("px", ""));
                     wallLeftSpecialY = parseInt(wallLeftSpecial[o].style.top.replace("px", ""));
-                    if (Math.abs(enemyX - wallLeftSpecialX) < 50 && Math.abs(enemyY - wallLeftSpecialY) < 80) {
-                        console.log(tempEnemySpeed)
+                    if (Math.abs(enemyX - wallLeftSpecialX) < 50 && Math.abs(enemyY - wallLeftSpecialY) < 90) {
                         enemyX += tempEnemySpeed;
                         enemy[i].style.left = enemyX + "px";
                     }
@@ -360,7 +359,7 @@ if (gameBroke == false) {
                 for (let o = 0; o < wallRightSpecial.length; o++) {
                     wallRightSpecialX = parseInt(wallRightSpecial[o].style.left.replace("px", ""));
                     wallRightSpecialY = parseInt(wallRightSpecial[o].style.top.replace("px", ""));
-                    if (Math.abs(enemyX - wallRightSpecialX) < 50 && Math.abs(enemyY - wallRightSpecialY) < 80) {
+                    if (Math.abs(enemyX - wallRightSpecialX) < 50 && Math.abs(enemyY - wallRightSpecialY) < 90) {
                         enemyX -= tempEnemySpeed;
                         enemy[i].style.left = enemyX + "px";
                     }
@@ -438,8 +437,8 @@ if (gameBroke == false) {
 
     function CollideEnemy() {
         for (let i = 0; i < enemy.length; i++) {
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
             var playerX = parseInt(player.style.left.replace("px", ""));
             var playerY = parseInt(player.style.top.replace("px", ""));
 
@@ -467,8 +466,8 @@ if (gameBroke == false) {
         for (let i = 0; i < enemy.length; i++) {
             var arrowX = parseInt(arrow.style.left.replace("px", ""));
             var arrowY = parseInt(arrow.style.top.replace("px", ""));
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
 
             var enemyId = enemy[i].id.split(" ");
             var tempEnemyHealth = parseInt(enemyId[0])
@@ -608,7 +607,7 @@ if (gameBroke == false) {
             GameWin();
         }
     }
-    setInterval(CollideWall, 4)
+    setInterval(CollideWall, 5)
     setInterval(CollideEnemy, 300)
     setInterval(CollideArrow, 600)
     setInterval(CollideSword, 900)
@@ -777,95 +776,81 @@ if (gameBroke == false) {
     var distanceX;
     var distanceY;
 
-
+    
     function MoveEnemy() {
         for (let i = 0; i < enemy.length; i++) {
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
             playerX = parseInt(player.style.left.replace("px", ""));
             playerY = parseInt(player.style.top.replace("px", ""));
-
+            
             distanceX = Math.abs(playerX - enemyX)
             distanceY = Math.abs(playerY - enemyY)
-
+            
             var enemyId = enemy[i].id.split(" ");
             var tempEnemyHealth = parseInt(enemyId[0])
-            var tempEnemySpeed = parseInt(enemyId[1])
-
-            if (distanceX < 275) //Mid Range Speed Correction
-            {
-                if (enemy[i].className == "redLB") {
-                    enemy[i].id = tempEnemyHealth + " " + .05;
-                }
-                else {
-                    enemy[i].id = tempEnemyHealth + " " + .04;
-                }
-            }
-            else {
-                enemy[i].id = tempEnemyHealth + " " + .02;
-            }
-
-            if (distanceX < 150) //Close Range Speed Correction
-            {
-                if (enemy[i].className == "redLB") {
-                    enemy[i].id = tempEnemyHealth + " " + .06;
-                }
-                else {
-                    enemy[i].id = tempEnemyHealth + " " + .05;
-                }
-            }
-            else {
-                enemy[i].id = tempEnemyHealth + " " + .02;
-            }
-
-            if (distanceY < 275) //Mid Range Speed Correction
-            {
-                if (enemy[i].className == "redLB") {
-                    enemy[i].id = tempEnemyHealth + " " + .05;
-                }
-                else {
-                    enemy[i].id = tempEnemyHealth + " " + .04;
-                }
-            }
-            else {
-                enemy[i].id = tempEnemyHealth + " " + .02;
-            }
-
-            if (distanceY < 150) //Close Range Speed Correction
-            {
-                if (enemy[i].className == "redLB") {
-                    enemy[i].id = tempEnemyHealth + " " + .06;
-                }
-                else {
-                    enemy[i].id = tempEnemyHealth + " " + .05;
-                }
-            }
-            else {
-                enemy[i].id = tempEnemyHealth + " " + .02;
-            }
+            var tempEnemySpeed = parseFloat(enemyId[1])
+            console.log(tempEnemySpeed)
 
             if (EnemyActivate == false) {
-                enemy[i].id = tempEnemyHealth + " " + 0;
+                enemy[i].id = tempEnemyHealth + " ";
             }
-
-            var moveAmountX = distanceX * Enemyspeed;
-            var moveAmountY = distanceY * Enemyspeed;
 
             if (playerX > enemyX) {
-                enemyX = enemyX + moveAmountX
+                enemyX += tempEnemySpeed
+                console.log("e1e")
             }
             if (playerX < enemyX) {
-                enemyX = enemyX - moveAmountX
+                enemyX -= tempEnemySpeed
+                console.log("e2e")
             }
             if (playerY > enemyY) {
-                enemyY = enemyY + moveAmountY
+                enemyY += tempEnemySpeed
+                console.log("e3e")
             }
             if (playerY < enemyY) {
-                enemyY = enemyY - moveAmountY
+                enemyY -= tempEnemySpeed
+                console.log("e4e")
+            }
+
+            //Rotation
+            if (playerX > enemyX && playerY > enemyY) {
+                //Left
+                enemy[i].style.transform = "scaleX(1) rotate(45deg)";
+            }
+            if (playerX > enemyX && playerY < enemyY) {
+                //Left
+                enemy[i].style.transform = "scaleX(1) rotate(-45deg)";
+            }
+            if (Math.abs(playerX - enemyX) <= 80 && playerY > enemyY) {
+                //Left
+                enemy[i].style.transform = "scaleX(1) rotate(90deg)";
+            }
+            if (Math.abs(playerX - enemyX) <= 80 && playerY < enemyY) {
+                //Left
+                enemy[i].style.transform = "scaleX(1) rotate(-90deg)";
+            }
+            if (playerX < enemyX && playerY > enemyY) {
+                //Right
+                enemy[i].style.transform = "scaleX(-1) rotate(45deg)";
+            }
+            if (playerX < enemyX && playerY < enemyY) {
+                //Right
+                enemy[i].style.transform = "scaleX(-1) rotate(-45deg)";
+            }
+            if (playerX < enemyX && Math.abs(playerY - enemyY) <= 100) {
+                //Right
+                enemy[i].style.transform = "scaleX(-1) rotate(0deg)";
+            }
+            if (playerX > enemyX && Math.abs(playerY - enemyY) <= 100) {
+                //Right
+                enemy[i].style.transform = "scaleX(1) rotate(-0deg)";
             }
 
             enemy[i].style.left = enemyX + "px";
             enemy[i].style.top = enemyY + "px";
+
+            enemy[i].id = enemyId[0] + " " + enemyId[1]; 
         }
     }
     setInterval(MoveEnemy, 100);
