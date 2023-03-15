@@ -7,6 +7,7 @@ var enemy = document.getElementsByName("enemy" + window.localStorage.getItem("le
 var arrow = document.getElementById("invisMoveTOMouse");
 var door = document.getElementById("Door" + window.localStorage.getItem("levelSelected"));
 var swordHitBox = document.getElementById("swordHitBox")
+var bowDirection = document.getElementById("bowDirection");
 
 //This gameBroke is for if you go past the amount of created levels
 
@@ -224,6 +225,7 @@ if (gameBroke == false) {
             weapon2Box.style.backgroundColor = "#FFFFFF"
             weapon1.style.visibility = "visible";
             weapon1Box.style.backgroundColor = "#68af36"
+            bowDirection.style.visibility = "hidden"
         }
         if (e.keyCode == 50) {
             //Weapon2 Selected
@@ -231,6 +233,7 @@ if (gameBroke == false) {
             weapon1Box.style.backgroundColor = "#FFFFFF"
             weapon2.style.visibility = "visible";
             weapon2Box.style.backgroundColor = "#68af36"
+            bowDirection.style.visibility = "visible"
         }
     }
     document.body.addEventListener("keydown", selectW);
@@ -238,6 +241,61 @@ if (gameBroke == false) {
 
     //Start Collision Section
     function CollideWall() {
+        //Not a part of wall collision but needs to be somewhere temporarily
+        var bowDirectionX = parseFloat(player.style.left.replace("px", ""))
+        var bowDirectionY = parseFloat(bowDirection.style.top.replace("px", ""))
+
+        var bowDX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""))
+        var bowDY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""))
+        
+        bowDirection.style.left = bowDX + 20 + 'px';
+        bowDirection.style.top = bowDY + 30 + 'px';
+        
+        
+        var distanceXbow = Math.abs(bowDX - mouseX)
+        var distanceYbow = Math.abs(bowDY - mouseY)
+        
+        var stretchX = distanceXbow
+        var stretchY = distanceYbow
+
+        if (distanceXbow > distanceYbow)
+        {
+            bowDirection.style.width = stretchX + "px";
+            var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
+            var leftDegree = leftAmount - (stretchX / 2)
+            bowDirection.style.left = leftDegree + "px"
+        }
+        else
+        {
+            bowDirection.style.width = stretchY + "px";
+            var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
+            var leftDegree = leftAmount - (stretchY / 2)
+            bowDirection.style.left = leftDegree + "px"
+        }
+
+        var X = "";
+        var Y = "";
+        
+        if (mouseX > bowDirectionX) {
+            X = "scaleX(1)";
+        }
+        if (mouseX < bowDirectionX) {
+            X = "scaleX(-1)"
+        }
+        if (mouseY > bowDirectionY) {
+            Y = "scaleY(1)";
+        }
+        if (mouseY < bowDirectionY) {
+            Y = "scaleY(-1)";
+        }
+        
+        var angleRad = Math.atan2(distanceYbow, distanceXbow)
+
+        var angleDeg = angleRad * 180 / Math.PI
+
+        bowDirection.style.transform = `${X} ${Y} rotate(${angleDeg}deg)`;
+
+        
         var wallTop = document.getElementById("WallTop" + window.localStorage.getItem("levelSelected"))
         var wallBttm = document.getElementById("WallBottom" + window.localStorage.getItem("levelSelected"))
         var wallLeft = document.getElementById("WallLeft" + window.localStorage.getItem("levelSelected"))
@@ -468,22 +526,25 @@ if (gameBroke == false) {
 
     function CollideArrow() {
         for (let i = 0; i < enemy.length; i++) {
-            var arrowX = parseInt(arrow.style.left.replace("px", ""));
-            var arrowY = parseInt(arrow.style.top.replace("px", ""));
-            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
-
-            var enemyId = enemy[i].id.split(" ");
-            var tempEnemyHealth = parseInt(enemyId[0])
-            var tempEnemySpeed = parseInt(enemyId[1])
-
-            if (Math.abs(arrowX - enemyX) < 50 && Math.abs(arrowY - enemyY) < 50 && tempEnemyHealth > 0) {
-                arrow.style.visibility = "hidden"
-                tempEnemyHealth = tempEnemyHealth - 5;
-                enemy[i].id = tempEnemyHealth + " " + tempEnemySpeed;
-                if (tempEnemyHealth <= 0) {
-                    enemy[i].style.visibility = "hidden"
-                    enemy[i].remove()
+            if (arrow.style.visibility == "visible")
+            {
+                var arrowX = parseInt(arrow.style.left.replace("px", ""));
+                var arrowY = parseInt(arrow.style.top.replace("px", ""));
+                var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+                var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
+    
+                var enemyId = enemy[i].id.split(" ");
+                var tempEnemyHealth = parseInt(enemyId[0])
+                var tempEnemySpeed = parseInt(enemyId[1])
+    
+                if (Math.abs(arrowX - enemyX) < 50 && Math.abs(arrowY - enemyY) < 50 && tempEnemyHealth > 0) {
+                    arrow.style.visibility = "hidden"
+                    tempEnemyHealth = tempEnemyHealth - 5;
+                    enemy[i].id = tempEnemyHealth + " " + tempEnemySpeed;
+                    if (tempEnemyHealth <= 0) {
+                        enemy[i].style.visibility = "hidden"
+                        enemy[i].remove()
+                    }
                 }
             }
         }
@@ -582,15 +643,19 @@ if (gameBroke == false) {
 
     }
     function CollideSword() {
-        var swordHitBoxX = parseInt(swordHitBox.style.left.replace("px", ""));
-        var swordHitBoxY = parseInt(swordHitBox.style.top.replace("px", ""));
+        var swordHitBoxX = parseFloat(swordHitBox.style.left.replace("px", ""));
+        var swordHitBoxY = parseFloat(swordHitBox.style.top.replace("px", ""));
         for (let i = 0; i < enemy.length; i++) {
-            var enemyX = parseInt(enemy[i].style.left.replace("px", ""));
-            var enemyY = parseInt(enemy[i].style.top.replace("px", ""));
+            var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
+            var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
+
+            var enemyId = enemy[i].id.split(" ");
+            var tempEnemyHealth = parseInt(enemyId[0])
+            var tempEnemySpeed = parseInt(enemyId[1])
 
             if (Math.abs(swordHitBoxX - enemyX) < 90 && Math.abs(swordHitBoxY - enemyY) < 90 && swordActivated == true) {
-                enemy[i].id = parseInt(enemy[i].id) - 5;
-                if (parseInt(enemy[i].id) <= 0) {
+                enemy[i].id = (tempEnemyHealth - 5) + " " + tempEnemySpeed;
+                if (tempEnemyHealth <= 0) {
                     enemy[i].style.visibility = "hidden"
                     enemy[i].remove()
                     enemyAlive = false;
@@ -613,7 +678,7 @@ if (gameBroke == false) {
     }
     setInterval(CollideWall, 5)
     setInterval(CollideEnemy, 300)
-    setInterval(CollideArrow, 600)
+    setInterval(CollideArrow, 100)
     setInterval(CollideSword, 900)
     setInterval(CollideDoor, 10)
     //End Collision Section
@@ -639,11 +704,11 @@ if (gameBroke == false) {
             xLocked = mouseX;
             yLocked = mouseY;
 
-            arrowX = parseInt(arrow.style.left.replace("px", ""));
-            arrowY = parseInt(arrow.style.top.replace("px", ""));
+            arrowX = parseFloat(arrow.style.left.replace("px", ""));
+            arrowY = parseFloat(arrow.style.top.replace("px", ""));
 
-            var weaponX = parseInt(document.getElementById("weapon1").style.left.replace("px", ""));
-            var weaponY = parseInt(document.getElementById("weapon1").style.top.replace("px", ""));
+            var weaponX = parseFloat(document.getElementById("weapon1").style.left.replace("px", ""));
+            var weaponY = parseFloat(document.getElementById("weapon1").style.top.replace("px", ""));
 
             arrowX = weaponX;
             arrowY = weaponY;
@@ -687,14 +752,11 @@ if (gameBroke == false) {
             xLocked = mouseX;
             yLocked = mouseY;
 
-            xLocked = mouseX;
-            yLocked = mouseY;
+            arrowX = parseFloat(arrow.style.left.replace("px", ""));
+            arrowY = parseFloat(arrow.style.top.replace("px", ""));
 
-            arrowX = parseInt(arrow.style.left.replace("px", ""));
-            arrowY = parseInt(arrow.style.top.replace("px", ""));
-
-            var weaponX = parseInt(document.getElementById("weapon2").style.left.replace("px", ""));
-            var weaponY = parseInt(document.getElementById("weapon2").style.top.replace("px", ""));
+            var weaponX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""));
+            var weaponY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""));
 
             arrowX = weaponX;
             arrowY = weaponY;
@@ -705,22 +767,26 @@ if (gameBroke == false) {
             distanceXarrow = Math.abs(arrowX - xLocked)
             distanceYarrow = Math.abs(arrowY - yLocked)
 
-            moveAmountX = (distanceXarrow + 350) * .015;
-            moveAmountY = (distanceYarrow - 50) * .05;
+            //moveAmountX = (distanceXarrow + 350) * .015;
+            //moveAmountY = (distanceYarrow - 50) * .05;
+
+            moveAmountX = distanceXarrow * .06;
+            moveAmountY = distanceYarrow * .06;
+
             arrow.style.transform = `rotate(-180deg)`;
-            if (xLocked > arrowX) {
+            if (xLocked >= arrowX) {
                 directionX = "Greater"
                 arrow.style.transform = `scaleX(1)`;
             }
-            if (xLocked < arrowX) {
+            if (xLocked <= arrowX) {
                 directionX = "Lesser"
                 arrow.style.transform = `scaleX(-1)`;
             }
-            if (yLocked > arrowY) {
+            if (yLocked >= arrowY) {
                 directionY = "Greater"
                 arrow.style.transform += "scaleY(1)";
             }
-            if (yLocked < arrowY) {
+            if (yLocked <= arrowY) {
                 directionY = "Lesser"
                 arrow.style.transform += "scaleY(-1)";
             }
@@ -749,20 +815,20 @@ if (gameBroke == false) {
     }
 
     function ArrowGoTo() {
-        arrowX = parseInt(arrow.style.left.replace("px", ""));
-        arrowY = parseInt(arrow.style.top.replace("px", ""));
+        arrowX = parseFloat(arrow.style.left.replace("px", ""));
+        arrowY = parseFloat(arrow.style.top.replace("px", ""));
 
         if (directionX == 'Greater') {
-            arrowX = arrowX + moveAmountX
+            arrowX += moveAmountX
         }
         if (directionX == 'Lesser') {
-            arrowX = arrowX - moveAmountX
+            arrowX -= moveAmountX
         }
         if (directionY == 'Greater') {
-            arrowY = arrowY + moveAmountY
+            arrowY += moveAmountY
         }
         if (directionY == 'Lesser') {
-            arrowY = arrowY - moveAmountY
+            arrowY -= moveAmountY
         }
 
         arrow.style.left = arrowX + "px";
@@ -794,7 +860,6 @@ if (gameBroke == false) {
             var enemyId = enemy[i].id.split(" ");
             var tempEnemyHealth = parseInt(enemyId[0])
             var tempEnemySpeed = parseFloat(enemyId[1])
-            console.log(tempEnemySpeed)
 
             if (EnemyActivate == false) {
                 enemy[i].id = tempEnemyHealth + " ";
@@ -802,19 +867,15 @@ if (gameBroke == false) {
 
             if (playerX > enemyX) {
                 enemyX += tempEnemySpeed
-                console.log("e1e")
             }
             if (playerX < enemyX) {
                 enemyX -= tempEnemySpeed
-                console.log("e2e")
             }
             if (playerY > enemyY) {
                 enemyY += tempEnemySpeed
-                console.log("e3e")
             }
             if (playerY < enemyY) {
                 enemyY -= tempEnemySpeed
-                console.log("e4e")
             }
 
             //Rotation

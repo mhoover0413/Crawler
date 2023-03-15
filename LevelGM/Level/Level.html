@@ -10,8 +10,8 @@
 
 <body style="overflow: hidden;">
     <div id="Everything" style="max-width: 100%; height: auto">
-        <marquee>Under Construction</marquee>
-        <div name="Player">
+        <marquee style="user-select: none">Under Construction</marquee>
+        <div name="Player" style="user-select: none">
             <img id="player" style="width: 100px; height: 100px; left: 750px; top: 500px; position: absolute;"
                 src="./Art/Senator_Catstrong.png"></img>
             <img id="weapon1"
@@ -19,33 +19,34 @@
                 name="Sword" src="./Art/Base_Katana.png"></img>
             <img id="swordHitBox" style="width: 50px; height: 50px; position: absolute; visibility: hidden;"></img>
             <img id="weapon2"
-                style="width: 60px; height: 75px; left: 740px; top: 500px; position: absolute; visibility: hidden;"
+                style="width: 60px; height: 75px; left: 740px; top: 500px; position: absolute; visibility: hidden"
                 name="Bow" src="./Art/Base_Bow.png"></img>
+            <img id="bowDirection" style="position: absolute; height: 20px; opacity: 15%; visibility: hidden;" src="./Art/Placeholders/PlaceholderBowDirection.png"></img>
         </div>
 
         <div id="HealthEmptyBar"
-            style="left: 20px; width: 200px; top: 15px;height: 30px; position: absolute; border: thick double black;">
+            style="left: 20px; width: 200px; top: 15px;height: 30px; position: absolute; border: thick double black; user-select: none">
         </div>
         <div id="HealthAmount"
-            style="left: 25px; top: 20px; width: 200px; height: 30px; position: absolute; background-color: green;">
+            style="left: 25px; top: 20px; width: 200px; height: 30px; position: absolute; background-color: green; user-select: none">
         </div>
 
         <div id="Slot1"
-            style="left: 1600px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black;">
+            style="left: 1600px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black; user-select: none">
         </div>
         <div id="Slot2"
-            style="left: 1750px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black;">
+            style="left: 1750px; width: 120px; top: 800px; height: 120px; position: absolute; border: thick double black; user-select: none">
         </div>
 
         <img id="invisMoveTOMouse" src="./Art/AngleTesting.png"
-            style="left: 1000px; width: 80px; top: 1000px; height: 120px; position: absolute; visibility: hidden;"></img>
+            style="left: 1000px; width: 80px; top: 1000px; height: 120px; position: absolute; visibility: hidden; user-select: none"></img>
 
-        <img id="Weapon1" style="left: 1610px; width: 120px; top: 805px; height: 120px; position: absolute;"
+        <img id="Weapon1" style="left: 1610px; width: 120px; top: 805px; height: 120px; position: absolute; user-select: none"
             src="./Art/Base_Katana.png"></img>
-        <img id="Weapon2" style="left: 1770px; width: 120px; top: 810px; height: 120px; position: absolute;"
+        <img id="Weapon2" style="left: 1770px; width: 120px; top: 810px; height: 120px; position: absolute; user-select: none"
             src="./Art/Base_Bow.png"></img>
 
-        <div id="Level1Set" style="visibility: hidden;">
+        <div id="Level1Set" style="visibility: hidden; user-select: none">
             <img id="WallTop1" style="width: 140px; height: 100px; left: 600px; top: 50px; position: absolute"
                 src="./Art/Sand_Wall_Top.png"></img>
             <img id="WallTop1" style="width: 140px; height: 100px; left: 740px; top: 50px; position: absolute"
@@ -92,11 +93,11 @@
                 src="./Art/Sand_Wall_Right.png"></img>
             <img id="Door1" style="left: 750px; width: 120px; top: 50px; height: 90px; position: absolute; z-index: 1;"
                 src="./Art/Door.png"></img>
-            <img name="enemy1" id="25 .03" style="width: 100px; height: 100px; left: 850px; top: 100px; position: absolute;"
+            <img name="enemy1" id="25 3" style="width: 100px; height: 100px; left: 850px; top: 100px; position: absolute;"
                 src="./Art/Blue_Lobster_Enemy_Horizontal.png"></img>
         </div>
 
-        <div id="Level2Set" style="visibility: hidden;">
+        <div id="Level2Set" style="visibility: hidden; user-select: none">
             <img id="WallTop2" style="width: 140px; height: 100px; left: 460px; top: 50px; position: absolute"
                 src="./Art/Sand_Wall_Top.png"></img>
             <img id="WallTop2" style="width: 140px; height: 100px; left: 600px; top: 50px; position: absolute"
@@ -151,84 +152,84 @@
                 src="./Art/Sand_Wall_Right.png"></img>
             <img id="Door2" style="left: 1200px; width: 80px; top: 40px; height: 65px; position: absolute; z-index: 1;"
                 src="./Art/Door.png"></img>
-            <img name="enemy2" id="25 .03"
+            <img name="enemy2" id="25 3"
                 style="width: 100px; height: 100px; left: 1150px; top: 100px; position: absolute;"
                 src="./Art/Blue_Lobster_Enemy_Horizontal.png"></img>
-            <img name="enemy2" class="redLB" id="25 .03"
+            <img name="enemy2" class="redLB" id="25 3"
                 style="width: 100px; height: 100px; left: 520px; top: 100px; position: absolute;"
                 src="./Art/Red_Lobster_Enemy_Horizontal.png"></img>
         </div>
         
-        <div id="Level3Set" style="visibility: hidden;">
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 460px; top: 50px; position: absolute"
+        <div id="Level3Set" style="visibility: hidden; user-select: none">
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 460px; top: 50px; position: absolute;"
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 600px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 600px; top: 50px; position: absolute;"
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 740px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 740px; top: 50px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 880px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 880px; top: 50px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 1020px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 1020px; top: 50px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 1300px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 1300px; top: 50px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallTop3" style="width: 140px; height: 100px; left: 1160px; top: 50px; position: absolute"
+            <img id="WallTop3" style="width: 140px; height: 100px; left: 1160px; top: 50px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-                <img name="WallTop3S" style="width: 104px; height: 100px; left: 787px; top: 330px; position: absolute"
+                <img name="WallTop3S" style="width: 104px; height: 100px; left: 707px; top: 380px; position: absolute; "
                 src="./Art/Sand_Wall_Top.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 460px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 460px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 600px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 600px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 740px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 740px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 880px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 880px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1020px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1020px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1160px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1160px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1300px; top: 650px; position: absolute"
+            <img id="WallBottom3" style="width: 140px; height: 100px; left: 1300px; top: 650px; position: absolute; "
                 src="./Art/Sand_Wall_Bttm.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 120px; left: 460px; top: 130px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 120px; left: 460px; top: 130px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 250px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 250px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 390px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 390px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 530px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 530px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 600px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 600px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 90px; position: absolute"
+            <img id="WallLeft3" style="width: 100px; height: 140px; left: 460px; top: 90px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-                <img name="WallLeft3S" style="width: 100px; height: 140px; left: 840px; top: 100px; position: absolute"
+                <img name="WallLeft3S" style="width: 100px; height: 140px; left: 760px; top: 100px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-                <img name="WallLeft3S" style="width: 100px; height: 140px; left: 840px; top: 240px; position: absolute"
+                <img name="WallLeft3S" style="width: 100px; height: 140px; left: 760px; top: 240px; position: absolute; "
                 src="./Art/Sand_Wall_Left.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 120px; left: 1340px; top: 130px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 120px; left: 1340px; top: 130px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-                <img name="WallRight3S" style="width: 100px; height: 140px; left: 740px; top: 100px; position: absolute"
+                <img name="WallRight3S" style="width: 100px; height: 140px; left: 660px; top: 100px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-                <img name="WallRight3S" style="width: 100px; height: 140px; left: 740px; top: 240px; position: absolute"
+                <img name="WallRight3S" style="width: 100px; height: 140px; left: 660px; top: 240px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 250px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 250px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 390px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 390px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 530px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 530px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 600px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 600px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 90px; position: absolute"
+            <img id="WallRight3" style="width: 100px; height: 140px; left: 1340px; top: 90px; position: absolute; "
                 src="./Art/Sand_Wall_Right.png"></img>
-            <img id="Door3" style="left: 1200px; width: 80px; top: 40px; height: 65px; position: absolute; z-index: 1;"
+            <img id="Door3" style="left: 1200px; width: 80px; top: 40px; height: 65px; position: absolute; z-index: 1; "
                 src="./Art/Door.png"></img>
-            <img name="enemy3" id="25 5"
-                style="width: 100px; height: 100px; left: 1150px; top: 100px; position: absolute;"
+            <img name="enemy3" id="25 3"
+                style="width: 100px; height: 100px; left: 1150px; top: 100px; position: absolute; "
                 src="./Art/Blue_Lobster_Enemy_Horizontal.png"></img>
-            <img name="enemy3" class="redLB" id="40 3.5"
-                style="width: 100px; height: 100px; left: 520px; top: 100px; position: absolute;"
+            <img name="enemy3" class="redLB" id="40 3"
+                style="width: 100px; height: 100px; left: 520px; top: 100px; position: absolute; "
                 src="./Art/Red_Lobster_Enemy_Horizontal.png"></img>
         </div>
         <script src="Level.js"></script>
