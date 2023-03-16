@@ -47,8 +47,8 @@ var enemyAlive = true;
 
 var EnemyActivate = true;
 
-var playerHealth = 1150;
-var playerMaxHealth = 1150;
+var playerHealth = 50;
+var playerMaxHealth = 50;
 
 var winStatus = false;
 var mouseX;
