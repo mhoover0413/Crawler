@@ -16,6 +16,8 @@ var bowDirection = document.getElementById("bowDirection");
 //Create a list of maps with their id and starting position, then random pick from it and spawn the player in it, add random enemies in the map after it.
 var gameBroke = false;
 
+var complete = false;
+
 var characterL = false;
 var characterR = false;
 
@@ -685,9 +687,10 @@ if (gameBroke == false) {
         var doorX = parseFloat(door.style.left.replace("px", ""));
         var doorY = parseFloat(door.style.top.replace("px", ""));
 
-        if (Math.abs(playerX - doorX) < 90 && Math.abs(playerY - doorY) < 90 && document.getElementsByName("enemy" + window.localStorage.getItem("levelSelected")).length == 0) {
+        if (Math.abs(playerX - doorX) < 90 && Math.abs(playerY - doorY) < 90 && document.getElementsByName("enemy" + window.localStorage.getItem("levelSelected")).length == 0 && complete == false) {
             winStatus = true;
             allEnemiesDead = true;
+            complete = true;
             GameWin();
         }
     }
