@@ -16,6 +16,11 @@ var bowDirection = document.getElementById("bowDirection");
 //Create a list of maps with their id and starting position, then random pick from it and spawn the player in it, add random enemies in the map after it.
 var gameBroke = false;
 
+var complete = false;
+
+var characterL = false;
+var characterR = false;
+
 var upPressed = false;
 var downPressed = false;
 var leftPressed = false;
@@ -187,11 +192,17 @@ if (gameBroke == false) {
         //left
         if (event.keyCode == 37) {
             leftPressed = false;
+            player.style.transform = "scaleX(-1)"
+            characterL = true;
+            characterR = false;
         }
 
         //right
         if (event.keyCode == 39) {
             rightPressed = false;
+            player.style.transform = "scaleX(1)"
+            characterL = false;
+            characterR = true;
         }
 
         //up
@@ -206,11 +217,17 @@ if (gameBroke == false) {
         //left
         if (event.keyCode == 65) {
             leftPressed = false;
+            player.style.transform = "scaleX(-1)"
+            characterL = true;
+            characterR = false;
         }
 
         //right
         if (event.keyCode == 68) {
             rightPressed = false;
+            player.style.transform = "scaleX(1)"
+            characterL = false;
+            characterR = true;
         }
     }
 
@@ -296,10 +313,10 @@ if (gameBroke == false) {
         bowDirection.style.transform = `${X} ${Y} rotate(${angleDeg}deg)`;
 
         
-        var wallTop = document.getElementById("WallTop" + window.localStorage.getItem("levelSelected"))
-        var wallBttm = document.getElementById("WallBottom" + window.localStorage.getItem("levelSelected"))
-        var wallLeft = document.getElementById("WallLeft" + window.localStorage.getItem("levelSelected"))
-        var wallRight = document.getElementById("WallRight" + window.localStorage.getItem("levelSelected"))
+        //var wallTop = document.getElementsByName("WallTop" + window.localStorage.getItem("levelSelected"))
+        //var wallBttm = document.getElementsByName("WallBottom" + window.localStorage.getItem("levelSelected"))
+        //var wallLeft = document.getElementsByName("WallLeft" + window.localStorage.getItem("levelSelected"))
+        //var wallRight = document.getElementsByName("WallRight" + window.localStorage.getItem("levelSelected"))
 
         var wallTopSpecial = "";
         var wallBttmSpecial = "";
@@ -327,10 +344,10 @@ if (gameBroke == false) {
             wallRightSpecial = document.getElementsByName("WallRight" + window.localStorage.getItem("levelSelected") + "S");
         }
 
-        var wallTopY = parseInt(wallTop.style.top.replace("px", ""));
-        var wallBottomY = parseInt(wallBttm.style.top.replace("px", ""));
-        var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
-        var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
+        // var wallTopY = parseInt(wallTop.style.top.replace("px", ""));
+        // var wallBottomY = parseInt(wallBttm.style.top.replace("px", ""));
+        // var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
+        // var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
 
         var playerX = parseFloat(player.style.left.replace("px", ""));
         var playerY = parseFloat(player.style.top.replace("px", ""));
@@ -365,25 +382,25 @@ if (gameBroke == false) {
                 allowDown = true;
             }
 
-            if (Math.abs(enemyY - wallTopY) < 50) {
-                enemyY += tempEnemySpeed;
-                enemy[i].style.top = enemyY + "px";
-            }
+            // if (Math.abs(enemyY - wallTopY) < 50) {
+            //     enemyY += tempEnemySpeed;
+            //     enemy[i].style.top = enemyY + "px";
+            // }
 
-            if (Math.abs(enemyY - wallBottomY) < 50) {
-                enemyY -= tempEnemySpeed;
-                enemy[i].style.top = enemyY + "px";
-            }
+            // if (Math.abs(enemyY - wallBottomY) < 50) {
+            //     enemyY -= tempEnemySpeed;
+            //     enemy[i].style.top = enemyY + "px";
+            // }
 
-            if (Math.abs(enemyX - wallLeftX) < 50) {
-                enemyX += tempEnemySpeed;
-                enemy[i].style.left = enemyX + "px";
-            }
+            // if (Math.abs(enemyX - wallLeftX) < 50) {
+            //     enemyX += tempEnemySpeed;
+            //     enemy[i].style.left = enemyX + "px";
+            // }
 
-            if (Math.abs(enemyX - wallRightX) < 50) {
-                enemyX -= tempEnemySpeed;
-                enemy[i].style.left = enemyX + "px";
-            }
+            // if (Math.abs(enemyX - wallRightX) < 50) {
+            //     enemyX -= tempEnemySpeed;
+            //     enemy[i].style.left = enemyX + "px";
+            // }
 
             if (wallTopSpecial != "") {
                 for (let o = 0; o < wallTopSpecial.length; o++) {
@@ -436,25 +453,25 @@ if (gameBroke == false) {
         }
 
         //Wall Collisions
-        if (Math.abs(playerY - wallTopY) < 50) {
-            playerY += 3;
-            player.style.top = playerY + "px";
-        }
+        // if (Math.abs(playerY - wallTopY) < 50) {
+        //     playerY += 3;
+        //     player.style.top = playerY + "px";
+        // }
 
-        if (Math.abs(playerY - wallBottomY) < 50) {
-            playerY -= 3;
-            player.style.top = playerY + "px";
-        }
+        // if (Math.abs(playerY - wallBottomY) < 50) {
+        //     playerY -= 3;
+        //     player.style.top = playerY + "px";
+        // }
 
-        if (Math.abs(playerX - wallLeftX) < 50) {
-            playerX += 3;
-            player.style.left = playerX + "px";
-        }
+        // if (Math.abs(playerX - wallLeftX) < 50) {
+        //     playerX += 3;
+        //     player.style.left = playerX + "px";
+        // }
 
-        if (Math.abs(playerX - wallRightX) < 50) {
-            playerX -= 3;
-            player.style.left = playerX + "px";
-        }
+        // if (Math.abs(playerX - wallRightX) < 50) {
+        //     playerX -= 3;
+        //     player.style.left = playerX + "px";
+        // }
         if (wallTopSpecial != "") {
             for (let i = 0; i < wallTopSpecial.length; i++) {
                 wallTopSpecialX = parseInt(wallTopSpecial[i].style.left.replace("px", ""));
@@ -551,10 +568,10 @@ if (gameBroke == false) {
         var arrowX = parseInt(arrow.style.left.replace("px", ""));
         var arrowY = parseInt(arrow.style.top.replace("px", ""));
 
-        var wallTop = document.getElementById("WallTop" + window.localStorage.getItem("levelSelected"))
-        var wallBttm = document.getElementById("WallBottom" + window.localStorage.getItem("levelSelected"))
-        var wallLeft = document.getElementById("WallLeft" + window.localStorage.getItem("levelSelected"))
-        var wallRight = document.getElementById("WallRight" + window.localStorage.getItem("levelSelected"))
+        //var wallTop = document.getElementById("WallTop" + window.localStorage.getItem("levelSelected"))
+       // var wallBttm = document.getElementById("WallBottom" + window.localStorage.getItem("levelSelected"))
+        //var wallLeft = document.getElementById("WallLeft" + window.localStorage.getItem("levelSelected"))
+        //var wallRight = document.getElementById("WallRight" + window.localStorage.getItem("levelSelected"))
 
         var wallTopSpecial = "";
         var wallBttmSpecial = "";
@@ -582,27 +599,27 @@ if (gameBroke == false) {
             wallRightSpecial = document.getElementsByName("WallRight" + window.localStorage.getItem("levelSelected") + "S");
         }
 
-        var wallTopY = parseInt(wallTop.style.top.replace("px", ""));
-        var wallBottomY = parseInt(wallBttm.style.top.replace("px", ""));
-        var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
-        var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
+        //var wallTopY = parseInt(wallTop.style.top.replace("px", ""));
+        //var wallBottomY = parseInt(wallBttm.style.top.replace("px", ""));
+        //var wallLeftX = parseInt(wallLeft.style.left.replace("px", ""));
+        //var wallRightX = parseInt(wallRight.style.left.replace("px", ""));
 
         //Hit
-        if (Math.abs(arrowY - wallTopY) < 50) {
-            arrow.style.visibility = "hidden"
-        }
+        // if (Math.abs(arrowY - wallTopY) < 50) {
+        //     arrow.style.visibility = "hidden"
+        // }
 
-        if (Math.abs(arrowY - wallBottomY) < 50) {
-            arrow.style.visibility = "hidden"
-        }
+        // if (Math.abs(arrowY - wallBottomY) < 50) {
+        //     arrow.style.visibility = "hidden"
+        // }
 
-        if (Math.abs(arrowX - wallLeftX) < 50) {
-            arrow.style.visibility = "hidden"
-        }
+        // if (Math.abs(arrowX - wallLeftX) < 50) {
+        //     arrow.style.visibility = "hidden"
+        // }
 
-        if (Math.abs(arrowX - wallRightX) < 50) {
-            arrow.style.visibility = "hidden"
-        }
+        // if (Math.abs(arrowX - wallRightX) < 50) {
+        //     arrow.style.visibility = "hidden"
+        // }
 
         if (wallTopSpecial != "") {
             for (let i = 0; i < wallTopSpecial.length; i++) {
@@ -670,9 +687,10 @@ if (gameBroke == false) {
         var doorX = parseFloat(door.style.left.replace("px", ""));
         var doorY = parseFloat(door.style.top.replace("px", ""));
 
-        if (Math.abs(playerX - doorX) < 90 && Math.abs(playerY - doorY) < 90 && document.getElementsByName("enemy" + window.localStorage.getItem("levelSelected")).length == 0) {
+        if (Math.abs(playerX - doorX) < 90 && Math.abs(playerY - doorY) < 90 && document.getElementsByName("enemy" + window.localStorage.getItem("levelSelected")).length == 0 && complete == false) {
             winStatus = true;
             allEnemiesDead = true;
+            complete = true;
             GameWin();
         }
     }
