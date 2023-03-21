@@ -21,6 +21,8 @@ var gameBroke = false;
 
 var complete = false;
 
+var timer = 0.00;
+
 var characterL = false;
 var characterR = false;
 
@@ -258,6 +260,17 @@ if (gameBroke == false) {
     }
     document.body.addEventListener("keydown", selectW);
     //End Weapon Select Section
+
+    //Start Level Timer
+    function increaseTime() {
+        timer += .004;
+        timer.toFixed(2);
+        console.log(timer.toFixed(2));
+    };
+    if (!winStatus) {
+        setInterval(increaseTime, 1);
+    };
+    //End Level Timer
 
     //Start Collision Section
     function CollideWall() {
