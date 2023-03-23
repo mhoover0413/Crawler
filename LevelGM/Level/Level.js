@@ -21,6 +21,10 @@ var gameBroke = false;
 
 var complete = false;
 
+var weaponSelected = 0;
+
+var timer = 0.00;
+
 var characterL = false;
 var characterR = false;
 
@@ -256,7 +260,49 @@ if (gameBroke == false) {
             bowDirection.style.visibility = "visible"
         }
     }
+    function selectS(e) {
+        if (e.deltaY)
+        {
+            if (e.deltaY < 0)
+            {
+                console.log("up")
+                //Scroll Up
+                weaponSelected++;
+                if (weaponSelected >= 3)
+                {
+                    weaponSelected = 0
+                }
+            }
+            else if (e.deltaY > 0)
+            {
+                console.log("down")
+                //Scroll Down
+                weaponSelected--;
+                if (weaponSelected <= -1)
+                {
+                    weaponSelected = 2;
+                }
+            }
+        }
+        if (weaponSelected == 1 && weapon1.style.visibility == "hidden") {
+            //Weapon1 Selected
+            weapon2.style.visibility = "hidden"
+            weapon2Box.style.backgroundColor = "#FFFFFF"
+            weapon1.style.visibility = "visible";
+            weapon1Box.style.backgroundColor = "#68af36"
+            bowDirection.style.visibility = "hidden"
+        }
+        if (weaponSelected == 2 && weapon2.style.visibility == "hidden") {
+            //Weapon2 Selected
+            weapon1.style.visibility = "hidden"
+            weapon1Box.style.backgroundColor = "#FFFFFF"
+            weapon2.style.visibility = "visible";
+            weapon2Box.style.backgroundColor = "#68af36"
+            bowDirection.style.visibility = "visible"
+        }
+    }
     document.body.addEventListener("keydown", selectW);
+    document.addEventListener("wheel", selectS)
     //End Weapon Select Section
 
     //Start Level Timer
