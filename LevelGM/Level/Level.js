@@ -306,8 +306,10 @@ if (gameBroke == false) {
     //End Weapon Select Section
 
     //Start Level Timer
+    var timer = 0;
     var timerDiv = document.getElementById('timer');
     function increaseTime() {
+        console.log(timer);
         timer += .004;
         timer *= 1000;
         timer = Math.round(timer);
