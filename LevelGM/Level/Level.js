@@ -306,10 +306,13 @@ if (gameBroke == false) {
     //End Weapon Select Section
 
     //Start Level Timer
+    var timerDiv = document.getElementById('timer');
     function increaseTime() {
         timer += .004;
-        timer.toFixed(2);
-        //console.log(timer.toFixed(2));
+        timer *= 1000;
+        timer = Math.round(timer);
+        timer /= 1000;
+        timerDiv.innerHTML = timer;
     };
     if (!winStatus) {
         setInterval(increaseTime, 1);
@@ -324,26 +327,24 @@ if (gameBroke == false) {
 
         var bowDX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""))
         var bowDY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""))
-        
+
         bowDirection.style.left = bowDX + 20 + 'px';
         bowDirection.style.top = bowDY + 30 + 'px';
-        
-        
+
+
         var distanceXbow = Math.abs(bowDX - mouseX)
         var distanceYbow = Math.abs(bowDY - mouseY)
-        
+
         var stretchX = distanceXbow
         var stretchY = distanceYbow
 
-        if (distanceXbow > distanceYbow)
-        {
+        if (distanceXbow > distanceYbow) {
             bowDirection.style.width = stretchX + "px";
             var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
             var leftDegree = leftAmount - (stretchX / 2)
             bowDirection.style.left = leftDegree + "px"
         }
-        else
-        {
+        else {
             bowDirection.style.width = stretchY + "px";
             var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
             var leftDegree = leftAmount - (stretchY / 2)
@@ -352,7 +353,7 @@ if (gameBroke == false) {
 
         var X = "";
         var Y = "";
-        
+
         if (mouseX > bowDirectionX) {
             X = "scaleX(1)";
         }
@@ -365,7 +366,7 @@ if (gameBroke == false) {
         if (mouseY < bowDirectionY) {
             Y = "scaleY(-1)";
         }
-        
+
         var angleRad = Math.atan2(distanceYbow, distanceXbow)
 
         var angleDeg = angleRad * 180 / Math.PI
@@ -552,17 +553,16 @@ if (gameBroke == false) {
 
     function CollideArrow() {
         for (let i = 0; i < enemy.length; i++) {
-            if (arrow.style.visibility == "visible")
-            {
+            if (arrow.style.visibility == "visible") {
                 var arrowX = parseInt(arrow.style.left.replace("px", ""));
                 var arrowY = parseInt(arrow.style.top.replace("px", ""));
                 var enemyX = parseFloat(enemy[i].style.left.replace("px", ""));
                 var enemyY = parseFloat(enemy[i].style.top.replace("px", ""));
-    
+
                 var enemyId = enemy[i].id.split(" ");
                 var tempEnemyHealth = parseInt(enemyId[0])
                 var tempEnemySpeed = parseInt(enemyId[1])
-    
+
                 if (Math.abs(arrowX - enemyX) < 50 && Math.abs(arrowY - enemyY) < 50 && tempEnemyHealth > 0) {
                     arrow.style.visibility = "hidden"
                     tempEnemyHealth = tempEnemyHealth - 5;
