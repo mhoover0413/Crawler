@@ -134,11 +134,15 @@ if (gameBroke == false) {
             player.style.left = playerX + "px";
             player.style.top = playerY + "px";
 
-            weapon1.style.top = playerY - 8 + "px";
-            weapon2.style.top = playerY + 15 + "px";
+            if (weapon1.id == "weapon1") {
+                weapon1.style.top = playerY - 8 + "px";
+                weapon1.style.left = playerX - 45 + "px";
+            }
+            if (weapon2.id == "weapon2") {
+                weapon2.style.top = playerY + 15 + "px";
+                weapon2.style.left = playerX - 10 + "px";
+            }
             swordHitBox.style.top = playerY + 55 + "px";
-            weapon1.style.left = playerX - 45 + "px";
-            weapon2.style.left = playerX - 10 + "px";
             swordHitBox.style.left = playerX - 20 + "px";
         }
     }
@@ -236,6 +240,19 @@ if (gameBroke == false) {
             characterL = false;
             characterR = true;
         }
+
+        //Drop (q)
+        if (event.keyCode == 81) {
+            console.log("q hit")
+            if (weaponSelected == 1 || weapon1.style.visibility == "visible") {
+                console.log("dropping first one")
+                weapon1.id = "weapon"
+            }
+            if (weaponSelected == 2 || weapon2.style.visibility == "visible") {
+                console.log("dropping second  one")
+                weapon2.id = "weapon"
+            }
+        }
     }
 
     setInterval(inputs, 2);
@@ -243,48 +260,45 @@ if (gameBroke == false) {
 
     //Start Weapon Select Section
     function selectW(e) {
-        if (e.keyCode == 49) {
+        if (e.keyCode == 49 && weapon1.id !== "weapon") {
             //Weapon1 Selected
-            weapon2.style.visibility = "hidden"
-            weapon2Box.style.backgroundColor = "#FFFFFF"
+            if (weapon2.id !== "weapon") {
+                weapon2.style.visibility = "hidden"
+                weapon2Box.style.backgroundColor = "#FFFFFF"
+            }
             weapon1.style.visibility = "visible";
             weapon1Box.style.backgroundColor = "#68af36"
             bowDirection.style.visibility = "hidden"
         }
-        if (e.keyCode == 50) {
+        if (e.keyCode == 50 && weapon2.id !== "weapon") {
             //Weapon2 Selected
-            weapon1.style.visibility = "hidden"
-            weapon1Box.style.backgroundColor = "#FFFFFF"
+            if (weapon1.id !== "weapon") {
+                weapon1.style.visibility = "hidden"
+                weapon1Box.style.backgroundColor = "#FFFFFF"
+            }
             weapon2.style.visibility = "visible";
             weapon2Box.style.backgroundColor = "#68af36"
             bowDirection.style.visibility = "visible"
         }
     }
     function selectS(e) {
-        if (e.deltaY)
-        {
-            if (e.deltaY < 0)
-            {
-                console.log("up")
+        if (e.deltaY) {
+            if (e.deltaY < 0) {
                 //Scroll Up
                 weaponSelected++;
-                if (weaponSelected >= 3)
-                {
+                if (weaponSelected >= 3) {
                     weaponSelected = 0
                 }
             }
-            else if (e.deltaY > 0)
-            {
-                console.log("down")
+            else if (e.deltaY > 0) {
                 //Scroll Down
                 weaponSelected--;
-                if (weaponSelected <= -1)
-                {
+                if (weaponSelected <= -1) {
                     weaponSelected = 2;
                 }
             }
         }
-        if (weaponSelected == 1 && weapon1.style.visibility == "hidden") {
+        if (weaponSelected == 1 && weapon1.style.visibility == "hidden" && weapon1.id !== "weapon") {
             //Weapon1 Selected
             weapon2.style.visibility = "hidden"
             weapon2Box.style.backgroundColor = "#FFFFFF"
@@ -292,7 +306,7 @@ if (gameBroke == false) {
             weapon1Box.style.backgroundColor = "#68af36"
             bowDirection.style.visibility = "hidden"
         }
-        if (weaponSelected == 2 && weapon2.style.visibility == "hidden") {
+        if (weaponSelected == 2 && weapon2.style.visibility == "hidden" && weapon2.id !== "weapon") {
             //Weapon2 Selected
             weapon1.style.visibility = "hidden"
             weapon1Box.style.backgroundColor = "#FFFFFF"
@@ -309,7 +323,6 @@ if (gameBroke == false) {
     var timer = 0;
     var timerDiv = document.getElementById('timer');
     function increaseTime() {
-        console.log(timer);
         timer += .004;
         timer *= 1000;
         timer = Math.round(timer);
@@ -324,57 +337,58 @@ if (gameBroke == false) {
     //Start Collision Section
     function CollideWall() {
         //Not a part of wall collision but needs to be somewhere temporarily
-        var bowDirectionX = parseFloat(player.style.left.replace("px", ""))
-        var bowDirectionY = parseFloat(bowDirection.style.top.replace("px", ""))
+        if (weapon2.id !== "weapon") {
+            var bowDirectionX = parseFloat(player.style.left.replace("px", ""))
+            var bowDirectionY = parseFloat(bowDirection.style.top.replace("px", ""))
 
-        var bowDX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""))
-        var bowDY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""))
+            var bowDX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""))
+            var bowDY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""))
 
-        bowDirection.style.left = bowDX + 20 + 'px';
-        bowDirection.style.top = bowDY + 30 + 'px';
+            bowDirection.style.left = bowDX + 20 + 'px';
+            bowDirection.style.top = bowDY + 30 + 'px';
 
 
-        var distanceXbow = Math.abs(bowDX - mouseX)
-        var distanceYbow = Math.abs(bowDY - mouseY)
+            var distanceXbow = Math.abs(bowDX - mouseX)
+            var distanceYbow = Math.abs(bowDY - mouseY)
 
-        var stretchX = distanceXbow
-        var stretchY = distanceYbow
+            var stretchX = distanceXbow
+            var stretchY = distanceYbow
 
-        if (distanceXbow > distanceYbow) {
-            bowDirection.style.width = stretchX + "px";
-            var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
-            var leftDegree = leftAmount - (stretchX / 2)
-            bowDirection.style.left = leftDegree + "px"
+            if (distanceXbow > distanceYbow) {
+                bowDirection.style.width = stretchX + "px";
+                var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
+                var leftDegree = leftAmount - (stretchX / 2)
+                bowDirection.style.left = leftDegree + "px"
+            }
+            else {
+                bowDirection.style.width = stretchY + "px";
+                var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
+                var leftDegree = leftAmount - (stretchY / 2)
+                bowDirection.style.left = leftDegree + "px"
+            }
+
+            var X = "";
+            var Y = "";
+
+            if (mouseX > bowDirectionX) {
+                X = "scaleX(1)";
+            }
+            if (mouseX < bowDirectionX) {
+                X = "scaleX(-1)"
+            }
+            if (mouseY > bowDirectionY) {
+                Y = "scaleY(1)";
+            }
+            if (mouseY < bowDirectionY) {
+                Y = "scaleY(-1)";
+            }
+
+            var angleRad = Math.atan2(distanceYbow, distanceXbow)
+
+            var angleDeg = angleRad * 180 / Math.PI
+
+            bowDirection.style.transform = `${X} ${Y} rotate(${angleDeg}deg)`;
         }
-        else {
-            bowDirection.style.width = stretchY + "px";
-            var leftAmount = parseFloat(bowDirection.style.left.replace("px", ""))
-            var leftDegree = leftAmount - (stretchY / 2)
-            bowDirection.style.left = leftDegree + "px"
-        }
-
-        var X = "";
-        var Y = "";
-
-        if (mouseX > bowDirectionX) {
-            X = "scaleX(1)";
-        }
-        if (mouseX < bowDirectionX) {
-            X = "scaleX(-1)"
-        }
-        if (mouseY > bowDirectionY) {
-            Y = "scaleY(1)";
-        }
-        if (mouseY < bowDirectionY) {
-            Y = "scaleY(-1)";
-        }
-
-        var angleRad = Math.atan2(distanceYbow, distanceXbow)
-
-        var angleDeg = angleRad * 180 / Math.PI
-
-        bowDirection.style.transform = `${X} ${Y} rotate(${angleDeg}deg)`;
-
         var wallTopSpecial = "";
         var wallBttmSpecial = "";
         var wallLeftSpecial = "";
@@ -750,59 +764,62 @@ if (gameBroke == false) {
 
             document.getElementById("invisMoveTOMouse").style.visibility = "visible"
         }
-        if (document.getElementById("weapon2").name == "Bow" && document.getElementById("weapon2").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
-            xLocked = mouseX;
-            yLocked = mouseY;
+        if (weapon2.id !== "weapon") {
 
-            arrowX = parseFloat(arrow.style.left.replace("px", ""));
-            arrowY = parseFloat(arrow.style.top.replace("px", ""));
+            if (document.getElementById("weapon2").name == "Bow" && document.getElementById("weapon2").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
+                xLocked = mouseX;
+                yLocked = mouseY;
 
-            var weaponX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""));
-            var weaponY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""));
+                arrowX = parseFloat(arrow.style.left.replace("px", ""));
+                arrowY = parseFloat(arrow.style.top.replace("px", ""));
 
-            arrowX = weaponX;
-            arrowY = weaponY;
+                var weaponX = parseFloat(document.getElementById("weapon2").style.left.replace("px", ""));
+                var weaponY = parseFloat(document.getElementById("weapon2").style.top.replace("px", ""));
 
-            arrow.style.left = arrowX + "px";
-            arrow.style.top = arrowY + "px";
+                arrowX = weaponX;
+                arrowY = weaponY;
 
-            distanceXarrow = Math.abs(arrowX - xLocked)
-            distanceYarrow = Math.abs(arrowY - yLocked)
+                arrow.style.left = arrowX + "px";
+                arrow.style.top = arrowY + "px";
 
-            moveAmountX = distanceXarrow * .06;
-            moveAmountY = distanceYarrow * .06;
+                distanceXarrow = Math.abs(arrowX - xLocked)
+                distanceYarrow = Math.abs(arrowY - yLocked)
 
-            arrow.style.transform = `rotate(-180deg)`;
-            if (xLocked >= arrowX) {
-                directionX = "Greater"
-                arrow.style.transform = `scaleX(1)`;
+                moveAmountX = distanceXarrow * .06;
+                moveAmountY = distanceYarrow * .06;
+
+                arrow.style.transform = `rotate(-180deg)`;
+                if (xLocked >= arrowX) {
+                    directionX = "Greater"
+                    arrow.style.transform = `scaleX(1)`;
+                }
+                if (xLocked <= arrowX) {
+                    directionX = "Lesser"
+                    arrow.style.transform = `scaleX(-1)`;
+                }
+                if (yLocked >= arrowY) {
+                    directionY = "Greater"
+                    arrow.style.transform += "scaleY(1)";
+                }
+                if (yLocked <= arrowY) {
+                    directionY = "Lesser"
+                    arrow.style.transform += "scaleY(-1)";
+                }
+
+                var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
+
+                var angleDeg = angleRad * 180 / Math.PI
+
+                arrow.style.transform += `rotate(${angleDeg}deg)`;
+
+                document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
-            if (xLocked <= arrowX) {
-                directionX = "Lesser"
-                arrow.style.transform = `scaleX(-1)`;
+            if (document.getElementById("weapon1").name == "Sword" && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false) {
+                change()
             }
-            if (yLocked >= arrowY) {
-                directionY = "Greater"
-                arrow.style.transform += "scaleY(1)";
+            if (document.getElementById("weapon2").name == "Sword" && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false) {
+                change()
             }
-            if (yLocked <= arrowY) {
-                directionY = "Lesser"
-                arrow.style.transform += "scaleY(-1)";
-            }
-
-            var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
-
-            var angleDeg = angleRad * 180 / Math.PI
-
-            arrow.style.transform += `rotate(${angleDeg}deg)`;
-
-            document.getElementById("invisMoveTOMouse").style.visibility = "visible"
-        }
-        if (document.getElementById("weapon1").name == "Sword" && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false) {
-            change()
-        }
-        if (document.getElementById("weapon2").name == "Sword" && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false) {
-            change()
         }
     }
 
