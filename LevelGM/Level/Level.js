@@ -1,4 +1,4 @@
-//890 lines
+//983 lines
 
 
 var player = document.getElementById("player");
@@ -11,10 +11,19 @@ var arrow = document.getElementById("invisMoveTOMouse");
 var door = document.getElementById("Door" + window.localStorage.getItem("levelSelected"));
 var swordHitBox = document.getElementById("swordHitBox")
 var bowDirection = document.getElementById("bowDirection");
+var playerShower = document.getElementById("playerStatShower");
 
 //This gameBroke is for if you go past the amount of created levels
 
 //Pre generated dungeons with random enemies in them, and exits that go to new dungeons
+
+//If all weapons are dropped, give the player fists weapon
+
+// Setup the weapon name like this name = "bow/sword/other_types item_name damage_amount crit_chance sell_price dropped_boolean"
+// Display box will be enabled if it is dropped and collides with playerShower, and will track with its respective weapon
+// Display box will use the info from the item name to display
+
+//Inventory button
 
 //Create a list of maps with their id and starting position, then random pick from it and spawn the player in it, add random enemies in the map after it.
 var gameBroke = false;
@@ -144,6 +153,9 @@ if (gameBroke == false) {
             }
             swordHitBox.style.top = playerY + 55 + "px";
             swordHitBox.style.left = playerX - 20 + "px";
+
+            playerShower.style.top = playerY - 20 + "px";
+            playerShower.style.left = playerX - 20 + "px";
         }
     }
 
@@ -243,13 +255,10 @@ if (gameBroke == false) {
 
         //Drop (q)
         if (event.keyCode == 81) {
-            console.log("q hit")
             if (weaponSelected == 1 || weapon1.style.visibility == "visible") {
-                console.log("dropping first one")
                 weapon1.id = "weapon"
             }
             if (weaponSelected == 2 || weapon2.style.visibility == "visible") {
-                console.log("dropping second  one")
                 weapon2.id = "weapon"
             }
         }
@@ -716,53 +725,57 @@ if (gameBroke == false) {
     var directionY;
 
     document.onmousedown = function () {
-        if (document.getElementById("weapon1").name == "Bow" && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
-            xLocked = mouseX;
-            yLocked = mouseY;
+        if (weapon1.id !== "weapon")
+        {
 
-            arrowX = parseFloat(arrow.style.left.replace("px", ""));
-            arrowY = parseFloat(arrow.style.top.replace("px", ""));
-
-            var weaponX = parseFloat(document.getElementById("weapon1").style.left.replace("px", ""));
-            var weaponY = parseFloat(document.getElementById("weapon1").style.top.replace("px", ""));
-
-            arrowX = weaponX;
-            arrowY = weaponY;
-
-            arrow.style.left = arrowX + "px";
-            arrow.style.top = arrowY + "px";
-
-            distanceXarrow = Math.abs(arrowX - xLocked)
-            distanceYarrow = Math.abs(arrowY - yLocked)
-
-            moveAmountX = ((distanceXarrow + 350) * .015) + .1;
-            moveAmountY = ((distanceYarrow - 50) * .05) + .1;
-
-            //arrow.style.transform = `scaleX(-1)`;
-            if (xLocked > arrowX) {
-                directionX = "Greater"
-                arrow.style.transform = "scaleX(1)";
+            if (document.getElementById("weapon1").name == "Bow" && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
+                xLocked = mouseX;
+                yLocked = mouseY;
+    
+                arrowX = parseFloat(arrow.style.left.replace("px", ""));
+                arrowY = parseFloat(arrow.style.top.replace("px", ""));
+    
+                var weaponX = parseFloat(document.getElementById("weapon1").style.left.replace("px", ""));
+                var weaponY = parseFloat(document.getElementById("weapon1").style.top.replace("px", ""));
+    
+                arrowX = weaponX;
+                arrowY = weaponY;
+    
+                arrow.style.left = arrowX + "px";
+                arrow.style.top = arrowY + "px";
+    
+                distanceXarrow = Math.abs(arrowX - xLocked)
+                distanceYarrow = Math.abs(arrowY - yLocked)
+    
+                moveAmountX = ((distanceXarrow + 350) * .015) + .1;
+                moveAmountY = ((distanceYarrow - 50) * .05) + .1;
+    
+                //arrow.style.transform = `scaleX(-1)`;
+                if (xLocked > arrowX) {
+                    directionX = "Greater"
+                    arrow.style.transform = "scaleX(1)";
+                }
+                if (xLocked < arrowX) {
+                    directionX = "Lesser"
+                    arrow.style.transform = "scaleX(-1)";
+                }
+                if (yLocked > arrowY) {
+                    directionY = "Greater"
+                    //arrow.style.transform = "scaleY(1)";
+                }
+                if (yLocked < arrowY) {
+                    directionY = "Lesser"
+                    //arrow.style.transform = "scaleY(-1)";
+                }
+    
+                var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
+    
+                var angleDeg = angleRad * 180 / Math.PI
+    
+                //arrow.style.transform = `rotate(${angleDeg}deg)`;
+    
+                document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
-            if (xLocked < arrowX) {
-                directionX = "Lesser"
-                arrow.style.transform = "scaleX(-1)";
-            }
-            if (yLocked > arrowY) {
-                directionY = "Greater"
-                //arrow.style.transform = "scaleY(1)";
-            }
-            if (yLocked < arrowY) {
-                directionY = "Lesser"
-                //arrow.style.transform = "scaleY(-1)";
-            }
-
-            var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
-
-            var angleDeg = angleRad * 180 / Math.PI
-
-            //arrow.style.transform = `rotate(${angleDeg}deg)`;
-
-            document.getElementById("invisMoveTOMouse").style.visibility = "visible"
         }
         if (weapon2.id !== "weapon") {
 
@@ -814,9 +827,13 @@ if (gameBroke == false) {
 
                 document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
+        }
+        if (weapon1.id !== "weapon") {
             if (document.getElementById("weapon1").name == "Sword" && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false) {
                 change()
             }
+        }
+        if (weapon2.id !== "weapon") {
             if (document.getElementById("weapon2").name == "Sword" && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false) {
                 change()
             }
