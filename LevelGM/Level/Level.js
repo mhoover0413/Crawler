@@ -12,6 +12,8 @@ var door = document.getElementById("Door" + window.localStorage.getItem("levelSe
 var swordHitBox = document.getElementById("swordHitBox")
 var bowDirection = document.getElementById("bowDirection");
 var playerShower = document.getElementById("playerStatShower");
+var itemShower = document.getElementById("itemShower");
+var itemShowerText = document.getElementById("itemShowerText");
 
 //This gameBroke is for if you go past the amount of created levels
 
@@ -108,17 +110,17 @@ if (gameBroke == false) {
 
     var speed = .6;
 
-    if (weapon1.name == "Sword") {
+    if (weapon1.name.includes("Sword")) {
         weapon1.style.transform = "rotate(-90deg)";
     }
-    if (weapon2.name == "Sword") {
+    if (weapon2.name.includes("Sword")) {
         weapon2.style.transform = "scaleX(-1)";
     }
 
-    if (weapon1.name == "Bow") {
+    if (weapon1.name.includes("Bow")) {
         weapon1.style.transform = "scaleX(1)";
     }
-    if (weapon2.name == "Bow") {
+    if (weapon2.name.includes("Bow")) {
         weapon2.style.transform = "scaleX(1)";
     }
 
@@ -143,11 +145,11 @@ if (gameBroke == false) {
             player.style.left = playerX + "px";
             player.style.top = playerY + "px";
 
-            if (weapon1.id == "weapon1") {
+            if (!weapon1.name.includes("dropped")) {
                 weapon1.style.top = playerY - 8 + "px";
                 weapon1.style.left = playerX - 45 + "px";
             }
-            if (weapon2.id == "weapon2") {
+            if (!weapon2.name.includes("dropped")) {
                 weapon2.style.top = playerY + 15 + "px";
                 weapon2.style.left = playerX - 10 + "px";
             }
@@ -156,6 +158,31 @@ if (gameBroke == false) {
 
             playerShower.style.top = playerY - 20 + "px";
             playerShower.style.left = playerX - 20 + "px";
+
+            itemShower.style.top = playerY - 100 + "px";
+            itemShower.style.left = playerX + 75 + "px";
+
+            itemShowerText.style.top = playerY - 97 + "px";
+            itemShowerText.style.left = playerX + 80 + "px";
+        }
+
+        var playerShowerX = parseFloat(playerShower.style.left.replace("px", ""))
+        var playerShowerY = parseFloat(playerShower.style.top.replace("px", ""))
+
+        //Fix naming convention, query selectors?
+        var allItemsWithSwordID = document.includes('dropped');
+        var allItemsWithBowID = document.getElementsByName('Bow dropped')
+
+        for (let item of allItemsWithBowID)
+        {
+            var itemX = parseFloat(item.style.left.replace("px", ""))
+            var itemY = parseFloat(item.style.top.replace("px", ""))
+
+            if (Math.abs(playerShowerX - itemX) < 50 && Math.abs(playerShowerY - itemY) < 80) {
+                console.log("hitting")
+                //var name = item.className
+                //itemShowerText.innerHTML = name
+            }
         }
     }
 
@@ -256,10 +283,10 @@ if (gameBroke == false) {
         //Drop (q)
         if (event.keyCode == 81) {
             if (weaponSelected == 1 || weapon1.style.visibility == "visible") {
-                weapon1.id = "weapon"
+                weapon1.name = weapon1.name + " dropped"
             }
             if (weaponSelected == 2 || weapon2.style.visibility == "visible") {
-                weapon2.id = "weapon"
+                weapon2.name = weapon2.name + " dropped"
             }
         }
     }
@@ -269,9 +296,9 @@ if (gameBroke == false) {
 
     //Start Weapon Select Section
     function selectW(e) {
-        if (e.keyCode == 49 && weapon1.id !== "weapon") {
+        if (e.keyCode == 49 && !weapon1.name.includes("dropped")) {
             //Weapon1 Selected
-            if (weapon2.id !== "weapon") {
+            if (!weapon2.name.includes("dropped")) {
                 weapon2.style.visibility = "hidden"
                 weapon2Box.style.backgroundColor = "#FFFFFF"
             }
@@ -279,9 +306,9 @@ if (gameBroke == false) {
             weapon1Box.style.backgroundColor = "#68af36"
             bowDirection.style.visibility = "hidden"
         }
-        if (e.keyCode == 50 && weapon2.id !== "weapon") {
+        if (e.keyCode == 50 && !weapon2.name.includes("dropped")) {
             //Weapon2 Selected
-            if (weapon1.id !== "weapon") {
+            if (!weapon1.name.includes("dropped")) {
                 weapon1.style.visibility = "hidden"
                 weapon1Box.style.backgroundColor = "#FFFFFF"
             }
@@ -307,7 +334,7 @@ if (gameBroke == false) {
                 }
             }
         }
-        if (weaponSelected == 1 && weapon1.style.visibility == "hidden" && weapon1.id !== "weapon") {
+        if (weaponSelected == 1 && weapon1.style.visibility == "hidden" && !weapon1.name.includes("dropped")) {
             //Weapon1 Selected
             weapon2.style.visibility = "hidden"
             weapon2Box.style.backgroundColor = "#FFFFFF"
@@ -315,7 +342,7 @@ if (gameBroke == false) {
             weapon1Box.style.backgroundColor = "#68af36"
             bowDirection.style.visibility = "hidden"
         }
-        if (weaponSelected == 2 && weapon2.style.visibility == "hidden" && weapon2.id !== "weapon") {
+        if (weaponSelected == 2 && weapon2.style.visibility == "hidden" && !weapon2.name.includes("dropped")) {
             //Weapon2 Selected
             weapon1.style.visibility = "hidden"
             weapon1Box.style.backgroundColor = "#FFFFFF"
@@ -346,7 +373,7 @@ if (gameBroke == false) {
     //Start Collision Section
     function CollideWall() {
         //Not a part of wall collision but needs to be somewhere temporarily
-        if (weapon2.id !== "weapon") {
+        if (!weapon2.name.includes("dropped")) {
             var bowDirectionX = parseFloat(player.style.left.replace("px", ""))
             var bowDirectionY = parseFloat(bowDirection.style.top.replace("px", ""))
 
@@ -725,10 +752,9 @@ if (gameBroke == false) {
     var directionY;
 
     document.onmousedown = function () {
-        if (weapon1.id !== "weapon")
+        if (!weapon1.name.includes("dropped"))
         {
-
-            if (document.getElementById("weapon1").name == "Bow" && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
+            if (document.getElementById("weapon1").name.includes("Bow") && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
                 xLocked = mouseX;
                 yLocked = mouseY;
     
@@ -777,9 +803,9 @@ if (gameBroke == false) {
                 document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
         }
-        if (weapon2.id !== "weapon") {
+        if (!weapon2.name.includes("dropped")) {
 
-            if (document.getElementById("weapon2").name == "Bow" && document.getElementById("weapon2").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
+            if (document.getElementById("weapon2").name.includes("Bow") && document.getElementById("weapon2").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
                 xLocked = mouseX;
                 yLocked = mouseY;
 
@@ -828,13 +854,13 @@ if (gameBroke == false) {
                 document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
         }
-        if (weapon1.id !== "weapon") {
-            if (document.getElementById("weapon1").name == "Sword" && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false) {
+        if (!weapon1.name.includes("dropped")) {
+            if (document.getElementById("weapon1").name.includes("Sword") && document.getElementById("weapon1").style.visibility == "visible" && swordActivated == false) {
                 change()
             }
         }
-        if (weapon2.id !== "weapon") {
-            if (document.getElementById("weapon2").name == "Sword" && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false) {
+        if (!weapon2.name.includes("dropped")) {
+            if (document.getElementById("weapon2").name.includes("Sword") && document.getElementById("weapon2").style.visibility == "visible" && swordActivated == false) {
                 change()
             }
         }
