@@ -15,6 +15,9 @@ var playerShower = document.getElementById("playerStatShower");
 var itemShower = document.getElementById("itemShower");
 var itemShowerText = document.getElementById("itemShowerText");
 
+var weapon1Dropped = false;
+var weapon2Dropped = false;
+
 //This gameBroke is for if you go past the amount of created levels
 
 //Pre generated dungeons with random enemies in them, and exits that go to new dungeons
@@ -170,19 +173,50 @@ if (gameBroke == false) {
         var playerShowerY = parseFloat(playerShower.style.top.replace("px", ""))
 
         //Fix naming convention, query selectors?
-        var allItemsWithSwordID = document.includes('dropped');
-        var allItemsWithBowID = document.getElementsByName('Bow dropped')
+        var allItemsWithDroppedID = document.querySelectorAll('img[name~="dropped"]');
 
-        for (let item of allItemsWithBowID)
-        {
-            var itemX = parseFloat(item.style.left.replace("px", ""))
-            var itemY = parseFloat(item.style.top.replace("px", ""))
+        console.log(allItemsWithDroppedID.length)
 
-            if (Math.abs(playerShowerX - itemX) < 50 && Math.abs(playerShowerY - itemY) < 80) {
+        var totalSearched = 0;
+        var hit = false;
+        for (let i = 0; i < allItemsWithDroppedID.length; i++) {
+            var itemX = parseFloat(allItemsWithDroppedID[i].style.left.replace("px", ""))
+            var itemY = parseFloat(allItemsWithDroppedID[i].style.top.replace("px", ""))
+
+            totalSearched++;
+
+            if (Math.abs(playerShowerX - itemX) < 50 && Math.abs(playerShowerY - itemY) < 50) {
                 console.log("hitting")
-                //var name = item.className
-                //itemShowerText.innerHTML = name
+                itemShower.style.visibility = "visible";
+                itemShowerText.style.visibility = "visible";
+                var nameDesc = allItemsWithDroppedID[i].name.split(" ");
+
+                var allItems = [nameDesc[1], nameDesc[2], nameDesc[3], nameDesc[4]]
+
+                var biggestLength = 0;
+
+                for (let item of allItems) {
+                    if (biggestLength < item.length) {
+                        biggestLength = item.length
+                    }
+                }
+
+                itemShower.style.width = ((biggestLength + 5) * 8.5) + "px"
+                itemShowerText.style.width = ((biggestLength + 5) * 8.5) + "px"
+
+                var name = nameDesc[1];
+                var damage = nameDesc[2];
+                var critChance = nameDesc[3];
+                var sellPrice = nameDesc[4];
+                itemShowerText.innerHTML = `Name: ${name}<br>Damage: ${damage}<br>Crit Chance: ${critChance}<br>Sell Price: ${sellPrice}`;
+
+                hit = true;
             }
+        }
+        if (totalSearched == allItemsWithDroppedID.length && hit == false) {
+            console.log("nope")
+            itemShower.style.visibility = "hidden";
+            itemShowerText.style.visibility = "hidden";
         }
     }
 
@@ -282,10 +316,12 @@ if (gameBroke == false) {
 
         //Drop (q)
         if (event.keyCode == 81) {
-            if (weaponSelected == 1 || weapon1.style.visibility == "visible") {
+            if (weaponSelected == 1 && weapon1Dropped == false || weapon1.style.visibility == "visible" && weapon1Dropped == false) {
+                weapon1Dropped = true;
                 weapon1.name = weapon1.name + " dropped"
             }
-            if (weaponSelected == 2 || weapon2.style.visibility == "visible") {
+            if (weaponSelected == 2 && weapon2Dropped == false || weapon2.style.visibility == "visible" && weapon2Dropped == false) {
+                weapon2Dropped = true
                 weapon2.name = weapon2.name + " dropped"
             }
         }
@@ -752,30 +788,29 @@ if (gameBroke == false) {
     var directionY;
 
     document.onmousedown = function () {
-        if (!weapon1.name.includes("dropped"))
-        {
+        if (!weapon1.name.includes("dropped")) {
             if (document.getElementById("weapon1").name.includes("Bow") && document.getElementById("weapon1").style.visibility == "visible" && document.getElementById("invisMoveTOMouse").style.visibility == "hidden") {
                 xLocked = mouseX;
                 yLocked = mouseY;
-    
+
                 arrowX = parseFloat(arrow.style.left.replace("px", ""));
                 arrowY = parseFloat(arrow.style.top.replace("px", ""));
-    
+
                 var weaponX = parseFloat(document.getElementById("weapon1").style.left.replace("px", ""));
                 var weaponY = parseFloat(document.getElementById("weapon1").style.top.replace("px", ""));
-    
+
                 arrowX = weaponX;
                 arrowY = weaponY;
-    
+
                 arrow.style.left = arrowX + "px";
                 arrow.style.top = arrowY + "px";
-    
+
                 distanceXarrow = Math.abs(arrowX - xLocked)
                 distanceYarrow = Math.abs(arrowY - yLocked)
-    
+
                 moveAmountX = ((distanceXarrow + 350) * .015) + .1;
                 moveAmountY = ((distanceYarrow - 50) * .05) + .1;
-    
+
                 //arrow.style.transform = `scaleX(-1)`;
                 if (xLocked > arrowX) {
                     directionX = "Greater"
@@ -793,13 +828,13 @@ if (gameBroke == false) {
                     directionY = "Lesser"
                     //arrow.style.transform = "scaleY(-1)";
                 }
-    
+
                 var angleRad = Math.atan2(distanceYarrow, distanceXarrow)
-    
+
                 var angleDeg = angleRad * 180 / Math.PI
-    
+
                 //arrow.style.transform = `rotate(${angleDeg}deg)`;
-    
+
                 document.getElementById("invisMoveTOMouse").style.visibility = "visible"
             }
         }
