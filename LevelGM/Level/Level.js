@@ -75,6 +75,10 @@ var winStatus = false;
 var mouseX;
 var mouseY;
 
+var backGroundMusic = new Audio('./bgm/Placeholders/8BitPurpleCometOST.mp3');
+backGroundMusic.loop = true;
+var isBGMPlaying = false;
+
 document.addEventListener("mousemove", onmousemove);
 
 if (window.localStorage.getItem("levelSelected")) {
@@ -400,6 +404,9 @@ if (gameBroke == false) {
         timer = Math.round(timer);
         timer /= 1000;
         timerDiv.innerHTML = timer;
+        if (!isBGMPlaying) {
+            backGroundMusic.play();
+        };
     };
     if (!winStatus) {
         setInterval(increaseTime, 1);
